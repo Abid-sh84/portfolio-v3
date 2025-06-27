@@ -2,6 +2,15 @@
 
 ![Portfolio Preview](/public/assets/abid_portfolio.jpeg)
 
+<div align="center">
+  
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+
+</div>
+
 ## 🌟 Overview
 
 This is my personal portfolio website built with React, Vite, and Tailwind CSS. It showcases my projects, skills, and professional experiences as a Full Stack Developer specializing in the MERN stack.
@@ -135,9 +144,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-- Email: [muhammadabid9326@gmail.com](mailto:muhammadabid9326@gmail.com)
-- LinkedIn: [https://www.linkedin.com/in/shkabid40/](https://www.linkedin.com/in/shkabid40/)
-- GitHub: [https://github.com/Abid-sh84](https://github.com/Abid-sh84)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:muhammadabid9326@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/shkabid40/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Abid-sh84)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/AbidShaikh550)
 
 ---
 
