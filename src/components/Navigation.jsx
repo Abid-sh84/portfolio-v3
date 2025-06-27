@@ -113,7 +113,7 @@ export default function Navigation() {
             </div>            {/* Desktop Resume Button */}
             <div className="hidden md:block">
               <a 
-                href="/abid_resume (2)_1750578812328.pdf"
+                href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer" 
                 className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-4 py-2 rounded transition-colors"

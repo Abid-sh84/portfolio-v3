@@ -75,8 +75,8 @@ export const projects = [  {
     title: "Personal Portfolio Website",
     description: "Designed and developed a responsive portfolio website to showcase my projects, skills, and experience. Implemented smooth animations and modern UI components for an engaging user experience.",
     technologies: ["React.js", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "#",
-    githubUrl: "#",
+    liveUrl: "https://shkabid40.vercel.app/",
+    githubUrl: "https://github.com/Abid-sh84/portfolio-v3",
     imageUrl: "/assets/abid_portfolio.jpeg",
     duration: "June 22 - June 26, 2025"
   }
