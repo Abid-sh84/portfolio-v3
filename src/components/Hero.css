@@ -1,0 +1,88 @@
+/* Hero section styles */
+
+.hero-image-container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-image-border {
+  border: 4px solid #3B82F6;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease-out;
+}
+
+.hero-image-border:hover {
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+}
+
+/* Mouse-following glow effect */
+.cursor-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.4) 0%,
+    rgba(59, 130, 246, 0) 70%
+  );
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-glow-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Static glow effect */
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  height: 140%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.3) 0%,
+    rgba(59, 130, 246, 0.15) 40%,
+    rgba(59, 130, 246, 0) 80%
+  );
+  z-index: 0;
+  filter: blur(25px);
+}
+
+/* Animated circle */
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.animated-circle {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+/* SVG background decoration */
+.svg-decoration path {
+  animation: morphPath 15s infinite alternate;
+}
+
+@keyframes morphPath {
+  0% {
+    d: path('M30,-30C41.7,-16.8,55.3,-8.4,58.6,3.4C62,15.1,55,30.2,43.3,41.8C31.5,53.3,15.8,61.3,0.1,61.2C-15.6,61,-31.2,52.7,-44.7,41.1C-58.2,29.5,-69.6,14.7,-70.1,-0.5C-70.5,-15.7,-60.1,-31.5,-46.6,-44.7C-33.1,-57.9,-16.6,-68.5,-3.3,-65.2C9.9,-61.9,19.8,-44.6,30,-30Z');
+  }
+  50% {
+    d: path('M44.6,-57.2C57.3,-44.5,66.8,-29.3,70.4,-12.7C74,3.9,71.7,22,62.7,35C53.7,48.1,38,56.2,21.7,62.1C5.4,68,-11.5,71.7,-27.2,67.9C-42.8,64,-57.2,52.7,-65.7,38C-74.2,23.2,-76.7,5,-72.6,-11.2C-68.4,-27.4,-57.7,-41.6,-44.3,-54.1C-30.9,-66.7,-15.5,-77.4,0.3,-77.7C16,-78.1,31.9,-68,44.6,-57.2Z');
+  }
+  100% {
+    d: path('M41.7,-49.1C53.4,-39.8,61.7,-25.6,65,-9.8C68.3,5.9,66.6,23.2,58.3,35.6C49.9,48.1,35,55.7,19.2,60.2C3.4,64.7,-13.3,66.1,-28.4,61.1C-43.5,56.1,-57.1,44.7,-62.1,30.8C-67.2,16.8,-63.8,0.3,-59,-15.8C-54.3,-32,-48.2,-48,-37.2,-57.2C-26.2,-66.3,-10.5,-68.5,2.8,-71.8C16.1,-75.1,30.1,-79.5,41.7,-70.8C53.4,-62.1,55.8,-40.2,53.2,-27.1Q50.5,-14,41.7,0.4L36.8,9.4');
+  }
+}

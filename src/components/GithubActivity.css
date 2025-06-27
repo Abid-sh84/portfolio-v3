@@ -1,0 +1,289 @@
+/* Custom styles for GitHub Calendar component to match the screenshot */
+
+:root {
+  /* GitHub dark mode colors */
+  --github-bg-color: #0d1117;
+  --github-border-color: #30363d;
+  --github-text-color: #8b949e;
+  --github-grid-empty: #161b22;
+  --github-grid-level-1: #0e4429;
+  --github-grid-level-2: #006d32;
+  --github-grid-level-3: #26a641;
+  --github-grid-level-4: #39d353;
+}
+
+/* Custom GitHub Calendar */
+.custom-github-calendar {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--github-text-color);
+  background-color: var(--github-bg-color);
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Month labels */
+.month-labels {
+  display: flex;
+  padding-left: 40px; /* Space for day labels */
+  font-size: 12px;
+  color: var(--github-text-color);
+  margin-bottom: 8px;
+  justify-content: space-between;
+}
+
+.month-label {
+  flex: 1;
+  text-align: center;
+}
+
+/* Calendar grid container */
+.calendar-grid-container {
+  display: flex;
+  position: relative;
+  min-width: 700px;
+}
+
+/* Simplified calendar container without day/month labels */
+.calendar-grid-container.simplified {
+  min-width: auto;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Day labels */
+.day-labels {
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  padding-right: 8px;
+  color: var(--github-text-color);
+  font-size: 12px;
+}
+
+.day-label {
+  height: 11px;
+  margin: 2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Contribution grid */
+.contribution-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-row {
+  display: flex;
+  height: 11px;
+  margin: 2px 0;
+}
+
+.grid-cell {
+  width: 11px;
+  height: 11px;
+  margin: 0 1px;
+  border-radius: 2px;
+}
+
+/* Contribution levels */
+.contribution-level-0 {
+  background-color: var(--github-grid-empty);
+}
+
+.contribution-level-1 {
+  background-color: var(--github-grid-level-1);
+}
+
+.contribution-level-2 {
+  background-color: var(--github-grid-level-2);
+}
+
+.contribution-level-3 {
+  background-color: var(--github-grid-level-3);
+}
+
+.contribution-level-4 {
+  background-color: var(--github-grid-level-4);
+}
+
+/* Legend */
+.contribution-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--github-text-color);
+  padding: 0 40px;
+}
+
+.legend-scale {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-cells {
+  display: flex;
+  gap: 2px;
+  margin: 0 5px;
+}
+
+.legend-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* Last push information */
+.last-push-info {
+  text-align: center;
+  margin-top: 16px;
+  color: var(--github-text-color);
+  font-size: 13px;
+}
+
+.last-push-info span {
+  color: #58a6ff;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-github-calendar {
+    overflow-x: auto;
+  }
+  
+  .calendar-grid-container {
+    min-width: 700px;
+  }
+  
+  /* Responsive adjustments for simplified view */
+  .calendar-grid-container.simplified {
+    transform: scale(0.9);
+    margin: 0 -15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-grid-container.simplified {
+    transform: scale(0.7);
+    margin: 0 -30px;
+  }
+}
+
+.text-muted,
+.float-left.text-gray {
+  color: var(--color-text-secondary) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+/* Make the container responsive */
+.calendar {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+/* Style the summary text to match GitHub native style */
+.js-yearly-contributions h2 {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin-bottom: 10px !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Style contribution container - hide streak info */
+.contrib-column {
+  border-left: 1px solid rgba(200, 200, 200, 0.1) !important;
+  font-size: 12px !important;
+  padding: 12px 10px !important;
+  display: none;
+}
+
+/* Only show the specific summary text */
+.float-left.text-gray {
+  display: block !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 0 !important;
+}
+
+/* Style links */
+.calendar a {
+  color: #58a6ff !important;
+  text-decoration: none !important;
+}
+
+/* Add some padding for better appearance */
+.calendar-graph {
+  padding: 5px 0 !important;
+}
+
+/* Style the days in the graph */
+rect.day {
+  rx: 2;
+  ry: 2;
+  shape-rendering: geometricPrecision;
+  outline: 1px solid rgba(27, 31, 35, 0.04);
+  outline-offset: -1px;
+}
+
+/* Style the legend */
+.contrib-legend .legend li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.contrib-legend {
+  text-align: right;
+  padding: 0 10px 10px 0;
+}
+
+.contrib-legend .legend {
+  display: inline-block;
+  list-style: none;
+  margin: 0 5px;
+  padding: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .contrib-legend {
+    text-align: center;
+  }
+  
+  .calendar-graph text.wday,
+  .calendar-graph text.month {
+    font-size: 8px !important;
+  }
+  
+  .calendar {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Fix for text visibility on dark backgrounds */
+text.month,
+text.wday,
+text.legend {
+  fill: var(--color-text-secondary) !important;
+}
+
+/* Hide extra UI elements that don't match native GitHub */
+.contrib-footer {
+  display: none !important;
+}
+
+/* Hide global stats to match screenshot */
+.js-yearly-contributions .float-right {
+  display: none !important;
+}

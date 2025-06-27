@@ -1,0 +1,28 @@
+/* About section styles */
+.about-image {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  object-position: top center;
+}
+
+.about-image-container {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  background-color: rgba(15, 15, 15, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .about-image {
+    max-height: 350px;
+    width: auto;
+  }
+}

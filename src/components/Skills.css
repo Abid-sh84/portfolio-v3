@@ -1,0 +1,71 @@
+/* Skills Component Styles */
+.skills-scroll-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.skills-gradient-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(to right, #0F0F0F 20%, rgba(15, 15, 15, 0));
+  z-index: 10;
+  pointer-events: none;
+}
+
+.skills-gradient-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(to left, #0F0F0F 20%, rgba(15, 15, 15, 0));
+  z-index: 10;
+  pointer-events: none;
+}
+
+.skills-icon {
+  transition: all 0.3s ease;
+}
+
+.skills-icon:hover {
+  transform: translateY(-8px) scale(1.05);
+  filter: drop-shadow(0 10px 8px rgb(59 130 246 / 0.2));
+}
+
+.skills-icon-bg {
+  transition: all 0.3s ease;
+}
+
+.skills-icon:hover .skills-icon-bg {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Hide scrollbar but allow scrolling */
+.skills-row {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.skills-row::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Skill element hover effect */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.skill-float:hover {
+  animation: float 2s ease-in-out infinite;
+}

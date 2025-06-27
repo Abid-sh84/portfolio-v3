@@ -1,0 +1,112 @@
+/* Auto-scrolling animation for skills */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.scroll-left {
+  display: flex;
+  width: fit-content;
+  animation: scrollLeft 40s linear infinite;
+}
+
+.scroll-right {
+  display: flex;
+  width: fit-content;
+  animation: scrollRight 40s linear infinite;
+}
+
+/* Pauses animation on hover */
+.scroll-left:hover,
+.scroll-right:hover {
+  animation-play-state: paused;
+}
+
+/* Hover and animation refinements */
+.skill-icon {
+  transition: all 0.3s ease;
+}
+
+.skill-icon:hover {
+  transform: translateY(-8px);
+}
+
+/* Container styling */
+.skills-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.fade-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  background: linear-gradient(to right, #0F0F0F, transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.fade-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  background: linear-gradient(to left, #0F0F0F, transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Icon glow effect */
+.skill-icon-inner {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+}
+
+.skill-icon-inner:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  transform: scale(1.1);
+}
+
+/* Icon pulse animation on hover */
+@keyframes iconPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.skill-icon:hover i {
+  animation: iconPulse 1s ease infinite;
+}
+
+/* Category card styling */
+.category-card {
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
+}

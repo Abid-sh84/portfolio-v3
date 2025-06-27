@@ -1,0 +1,47 @@
+/* Navigation styles */
+
+/* Mobile menu dropdown styling */
+.mobile-menu-dropdown {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(60, 60, 60, 0.3);
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+/* Desktop side navigation styling */
+.desktop-side-nav {
+  padding: 8px;
+  background-color: rgba(10, 10, 10, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
+  border: 1px solid rgba(60, 60, 60, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Icon hover effects */
+.nav-icon-wrapper:hover {
+  transform: translateY(-3px);
+}
+
+/* Active state for nav icons */
+.nav-active {
+  color: #3B82F6;
+}
+
+/* Desktop sidebar navigation animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile menu styles */
+.mobile-menu-dropdown {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+}

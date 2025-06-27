@@ -1,0 +1,47 @@
+.contact-social-icon {
+  transition: all 0.3s ease;
+}
+
+.contact-social-icon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+.contact-cta-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.contact-cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s;
+  z-index: -1;
+}
+
+.contact-cta-button:hover::before {
+  left: 0;
+}
+
+.contact-card {
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .contact-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
