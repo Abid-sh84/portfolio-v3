@@ -121,7 +121,7 @@ export default function Experience() {
         >
           <motion.a 
             variants={itemVariants}
-            href="/abid_resume (2)_1750578812328.pdf"
+            href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-3 rounded-md bg-portfolio-accent text-gray-900 font-medium transition hover:bg-opacity-80 inline-flex items-center"
