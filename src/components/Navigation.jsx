@@ -171,7 +171,7 @@ export default function Navigation() {
               ))}
               
               {/* Mobile Resume Button */}              <a 
-                href="/abid_resume (2)_1750578812328.pdf"
+                href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center py-3 text-portfolio-accent"
