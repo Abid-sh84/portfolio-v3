@@ -48,7 +48,10 @@ export const skills = [
   { name: "Postman", level: 75, category: "tools", icon: "fas fa-paper-plane" },
   { name: "GitHub", level: 80, category: "tools", icon: "fab fa-github" },
   { name: "Webpack", level: 65, category: "tools", icon: "fas fa-cube" },
-
+  { name: "Netlify", level: 75, category: "tools", icon: "devicon-netlify-plain" },
+  { name: "Vercel", level: 80, category: "tools", icon: "devicon-vercel-plain" },
+  { name: "Railway", level: 75, category: "tools", icon: "devicon-railway-plain" },
+  { name: "Render", level: 75, category: "tools", icon: "devicon-render-plain" },
 ];
 
 export const projects = [  {
