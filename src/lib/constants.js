@@ -16,7 +16,7 @@ export const personalInfo = {
 export const socialLinks = {
   github: "https://github.com/Abid-sh84",
   linkedin: "https://www.linkedin.com/in/shkabid40/",
-  twitter: "https://x.com/AbidShaikh550",
+  twitter: "https://x.com/shkabid40",
   discord: "https://discord.com/users/1288153530892423199",
   email: `mailto:${personalInfo.email}`,
   phone: `tel:${personalInfo.phone}`
