@@ -48,10 +48,11 @@ export const skills = [
   { name: "Postman", level: 75, category: "tools", icon: "fas fa-paper-plane" },
   { name: "GitHub", level: 80, category: "tools", icon: "fab fa-github" },
   { name: "Webpack", level: 65, category: "tools", icon: "fas fa-cube" },
-  { name: "Netlify", level: 75, category: "tools", icon: "devicon-netlify-plain" },
+   { name: "Netlify", level: 75, category: "tools", icon: "devicon-netlify-plain" },
   { name: "Vercel", level: 80, category: "tools", icon: "devicon-vercel-plain" },
   { name: "Railway", level: 75, category: "tools", icon: "devicon-railway-plain" },
   { name: "Render", level: 75, category: "tools", icon: "devicon-render-plain" },
+
 ];
 
 export const projects = [  {
@@ -71,17 +72,17 @@ export const projects = [  {
     liveUrl: "https://banking-system-iota-khaki.vercel.app/",
     githubUrl: "https://github.com/Abid-sh84/Banking-system",
     imageUrl: "/assets/banking_system.jpeg",
-    duration: "May 15 - June 10, 2025"
+    duration: "May 15 - June 15, 2025"
   },
   {
     id: "portfolio-website",
     title: "Personal Portfolio Website",
     description: "Designed and developed a responsive portfolio website to showcase my projects, skills, and experience. Implemented smooth animations and modern UI components for an engaging user experience.",
     technologies: ["React.js", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://shkabid40.vercel.app/",
-    githubUrl: "https://github.com/Abid-sh84/portfolio-v3",
+    liveUrl: "#",
+    githubUrl: "#",
     imageUrl: "/assets/abid_portfolio.jpeg",
-    duration: "June 22 - June 26, 2025"
+    duration: "February 10 - February 20, 2025"
   }
 ];
 
