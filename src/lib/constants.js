@@ -16,7 +16,7 @@ export const personalInfo = {
 export const socialLinks = {
   github: "https://github.com/Abid-sh84",
   linkedin: "https://www.linkedin.com/in/shkabid40/",
-  twitter: "https://x.com/shkabid40",
+  twitter: "https://x.com/AbidShaikh550",
   discord: "https://discord.com/users/1288153530892423199",
   email: `mailto:${personalInfo.email}`,
   phone: `tel:${personalInfo.phone}`
@@ -48,6 +48,7 @@ export const skills = [
   { name: "Postman", level: 75, category: "tools", icon: "fas fa-paper-plane" },
   { name: "GitHub", level: 80, category: "tools", icon: "fab fa-github" },
   { name: "Webpack", level: 65, category: "tools", icon: "fas fa-cube" },
+
    { name: "Netlify", level: 75, category: "tools", icon: "devicon-netlify-plain" },
   { name: "Vercel", level: 80, category: "tools", icon: "devicon-vercel-plain" },
   { name: "Railway", level: 75, category: "tools", icon: "devicon-railway-plain" },
@@ -66,8 +67,8 @@ export const projects = [  {
     duration: "April 16 - May 6, 2025"
   },  {
     id: "banking-system",
-    title: "Basic Banking System",
-    description: "Developed a web application that simulates basic banking operations such as viewing customer information, transferring money, and viewing transaction history. Project completed as part of The Sparks Foundation internship.",
+    title: "Banking System",
+    description: "Built a responsive full-stack banking system implement features like user account management fund transfer virtual debit card  focused on rest api communication and clean UI",
     technologies: ["Vue+vite", "Node.js", "Express", "Postgresql","Openrouter API","Deepseek"],
     liveUrl: "https://banking-system-iota-khaki.vercel.app/",
     githubUrl: "https://github.com/Abid-sh84/Banking-system",
