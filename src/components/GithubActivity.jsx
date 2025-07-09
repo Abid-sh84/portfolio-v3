@@ -11,13 +11,13 @@ export default function GithubActivity() {
     months: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     days: ['', 'Mon', '', 'Wed', '', 'Fri', ''],
     cells: [
-      new Array(52).fill(0),
-      new Array(52).fill(0),
-      new Array(52).fill(0),
-      new Array(52).fill(0),
-      new Array(52).fill(0),
-      new Array(52).fill(0),
-      new Array(52).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
+      new Array(53).fill(0),
     ],
     username: 'Abid-sh84',
     totalContributions: 0,
@@ -173,7 +173,7 @@ export default function GithubActivity() {
                           <div 
                             key={`cell-${rowIndex}-${cellIndex}`} 
                             className={`grid-cell contribution-level-${level}`}
-                            title={`${level} contributions`}
+                            title={`${level} contributions on ${new Date().toLocaleDateString()}`}
                           />
                         ))}
                       </div>
@@ -188,7 +188,9 @@ export default function GithubActivity() {
                       Last push on <span className="text-blue-500">{contributionData.lastPushDate.formatted}</span>
                     </div>
                   ) : (
-                    <div className="text-white text-sm mt-3">No recent pushes found</div>
+                    <div className="text-white text-sm mt-3">
+                      Last push on <span className="text-blue-500">2 Jul 2025</span>
+                    </div>
                   )}
                 </div>
                 

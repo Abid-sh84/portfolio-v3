@@ -1,11 +1,27 @@
 /* Navigation styles */
 
-/* Mobile menu dropdown styling */
-.mobile-menu-dropdown {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(60, 60, 60, 0.3);
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
+/* Mobile sidebar styling */
+.mobile-menu-sidebar {
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(60, 60, 60, 0.3);
+}
+
+/* Sidebar scroll styling */
+.mobile-menu-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-menu-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-menu-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(60, 60, 60, 0.5);
+  border-radius: 2px;
+}
+
+.mobile-menu-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(60, 60, 60, 0.7);
 }
 
 /* Desktop side navigation styling */
@@ -38,10 +54,4 @@
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-/* Mobile menu styles */
-.mobile-menu-dropdown {
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }

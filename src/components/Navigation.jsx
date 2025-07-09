@@ -128,60 +128,103 @@ export default function Navigation() {
                   Home
                 </Link>
               )}
-            </div>{/* Mobile Menu Button */}
+            </div>            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button 
                 onClick={() => setMenuOpen(!menuOpen)} 
-                className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-4 py-2 rounded transition-colors"
+                className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-3 py-2 rounded transition-colors flex items-center justify-center"
+                aria-label="Toggle menu"
               >
-                Menu
+                <i className={`fas ${menuOpen ? 'fa-times' : 'fa-bars'} text-lg`}></i>
               </button>
             </div>
           </div>
         </div>
-      </motion.div>      {/* Mobile Navigation - Dropdown Menu */}
+      </motion.div>      {/* Mobile Navigation - Sidebar Menu */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-16 left-0 right-0 z-50 md:hidden bg-portfolio-dark/95 mobile-menu-dropdown"
-          >
-            <div className="px-4 py-3 border-t border-gray-800 backdrop-blur-lg">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => { 
-                    e.preventDefault(); 
-                    scrollToSection(link.href);
-                    setMenuOpen(false);
-                  }}
-                  className={`flex items-center py-3 transition-colors ${
-                    activeSection === link.href.substring(1) 
-                      ? 'text-portfolio-accent nav-active'
-                      : 'text-gray-400 hover:text-gray-200'
-                  }`}
-                >
-                  <i className={`${link.icon} text-lg mr-3 w-6 text-center`}></i>
-                  <span>{link.name}</span>
-                </a>
-              ))}
-              
-              {/* Mobile Resume Button */}              <a 
-                href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center py-3 text-portfolio-accent"
-                onClick={() => setMenuOpen(false)}
-              >
-                <i className="fas fa-file-alt text-lg mr-3 w-6 text-center"></i>
-                <span>Resume</span>
-              </a>
-            </div>
-          </motion.div>
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+              onClick={() => setMenuOpen(false)}
+            />
+            
+            {/* Sidebar */}
+            <motion.div
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="fixed top-0 left-0 h-full w-80 z-50 md:hidden bg-portfolio-dark/95 mobile-menu-sidebar backdrop-blur-lg border-r border-gray-800"
+            >
+              <div className="flex flex-col h-full">
+                {/* Sidebar Header */}
+                <div className="flex items-center p-6 border-b border-gray-800">
+                  <Link 
+                    to="/"
+                    className="text-portfolio-accent font-bold text-2xl hover:text-white transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    A<span className="text-white">.</span>
+                  </Link>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="flex-1 px-6 py-4">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={(e) => { 
+                        e.preventDefault(); 
+                        scrollToSection(link.href);
+                        setMenuOpen(false);
+                      }}
+                      className={`flex items-center py-4 px-3 rounded-lg mb-2 transition-all duration-200 ${
+                        activeSection === link.href.substring(1) 
+                          ? 'text-portfolio-accent bg-portfolio-accent/10 nav-active'
+                          : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+                      }`}
+                    >
+                      <i className={`${link.icon} text-lg mr-4 w-6 text-center`}></i>
+                      <span className="font-medium">{link.name}</span>
+                    </a>
+                  ))}
+                </div>
+
+                {/* Sidebar Footer */}
+                <div className="p-6 border-t border-gray-800">
+                  {/* Mobile Resume Button */}
+                  <a 
+                    href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-full py-3 px-4 text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 rounded-lg transition-colors mb-4"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <i className="fas fa-file-alt text-lg mr-3"></i>
+                    <span>Resume</span>
+                  </a>
+                  
+                  {!isHomePage && (
+                    <Link
+                      to="/"
+                      className="flex items-center justify-center w-full py-3 px-4 text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 rounded-lg transition-colors"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <i className="fas fa-home text-lg mr-3"></i>
+                      <span>Home</span>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

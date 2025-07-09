@@ -43,6 +43,7 @@
   display: flex;
   position: relative;
   min-width: 700px;
+  justify-content: center;
 }
 
 /* Simplified calendar container without day/month labels */
@@ -50,6 +51,10 @@
   min-width: auto;
   justify-content: center;
   margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(27, 31, 35, 0.8), rgba(13, 17, 23, 0.9));
+  border-radius: 12px;
+  border: 1px solid var(--github-border-color);
 }
 
 /* Day labels */
@@ -72,80 +77,104 @@
 
 /* Contribution grid */
 .contribution-grid {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 10px;
+  background-color: var(--github-bg-color);
+  border-radius: 6px;
+  min-height: 120px;
 }
 
 .grid-row {
   display: flex;
-  height: 11px;
-  margin: 2px 0;
+  height: 12px;
+  gap: 2px;
+  align-items: center;
 }
 
 .grid-cell {
-  width: 11px;
-  height: 11px;
-  margin: 0 1px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px;
+  border: 1px solid rgba(27, 31, 35, 0.06);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
 }
 
-/* Contribution levels */
+.grid-cell:hover {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Contribution levels with better contrast */
 .contribution-level-0 {
   background-color: var(--github-grid-empty);
+  border: 1px solid rgba(27, 31, 35, 0.06);
 }
 
 .contribution-level-1 {
   background-color: var(--github-grid-level-1);
+  border: 1px solid var(--github-grid-level-1);
 }
 
 .contribution-level-2 {
   background-color: var(--github-grid-level-2);
+  border: 1px solid var(--github-grid-level-2);
 }
 
 .contribution-level-3 {
   background-color: var(--github-grid-level-3);
+  border: 1px solid var(--github-grid-level-3);
 }
 
 .contribution-level-4 {
   background-color: var(--github-grid-level-4);
+  border: 1px solid var(--github-grid-level-4);
 }
 
 /* Legend */
 .contribution-legend {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 20px;
   font-size: 12px;
   color: var(--github-text-color);
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .legend-scale {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .legend-cells {
   display: flex;
   gap: 2px;
-  margin: 0 5px;
+  margin: 0 8px;
 }
 
 .legend-cell {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px;
+  border: 1px solid rgba(27, 31, 35, 0.06);
 }
 
 /* Last push information */
 .last-push-info {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 20px;
   color: var(--github-text-color);
   font-size: 13px;
+  padding: 10px;
+  background: rgba(13, 17, 23, 0.5);
+  border-radius: 6px;
+  border: 1px solid var(--github-border-color);
 }
 
 .last-push-info span {
