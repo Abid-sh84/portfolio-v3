@@ -9,7 +9,7 @@ import { SyntaxHighlighter, vscDarkPlus } from '../../lib/syntax-highlighter';
 export default function TailwindCSS() {
   const blog = blogPosts.find(post => post.id === 'tailwind-css');
 
-  // Scroll to top when the page loads
+  // Scroll to top when the page is loads
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
