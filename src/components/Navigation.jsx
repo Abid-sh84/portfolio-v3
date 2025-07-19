@@ -91,7 +91,9 @@ export default function Navigation() {
             </span>
           </a>
         ))}
-      </motion.nav>      {/* Top Navigation - Logo, Resume and Mobile Menu */}
+      </motion.nav>
+
+      {/* Top Navigation - Logo and Mobile Menu */}
       <motion.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -110,20 +112,12 @@ export default function Navigation() {
                 A
                 <span className="text-white">.</span>
               </Link>
-            </div>            {/* Desktop Resume Button */}
+            </div>            {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <a 
-                href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer" 
-                className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-4 py-2 rounded transition-colors"
-              >
-                Resume
-              </a>
               {!isHomePage && (
                 <Link
                   to="/"
-                  className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-4 py-2 rounded transition-colors ml-4"
+                  className="text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 px-4 py-2 rounded transition-colors"
                 >
                   Home
                 </Link>
@@ -199,18 +193,6 @@ export default function Navigation() {
 
                 {/* Sidebar Footer */}
                 <div className="p-6 border-t border-gray-800">
-                  {/* Mobile Resume Button */}
-                  <a 
-                    href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-full py-3 px-4 text-portfolio-accent border border-portfolio-accent hover:bg-portfolio-accent/10 rounded-lg transition-colors mb-4"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <i className="fas fa-file-alt text-lg mr-3"></i>
-                    <span>Resume</span>
-                  </a>
-                  
                   {!isHomePage && (
                     <Link
                       to="/"

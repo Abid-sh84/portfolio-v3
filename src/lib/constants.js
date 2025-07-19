@@ -7,7 +7,6 @@ export const personalInfo = {
   title: "Full Stack Developer",
   subtitle: "MERN Stack Enthusiast",
   email: "muhammadabid9326@gmail.com",
-  phone: "+91 8451928440",
   location: "Thane, India 400612",
   description: "Passionate about crafting user-friendly, intuitive web experiences using modern web technologies. Skilled in building responsive interfaces and dynamic applications with the MERN stack, focused on delivering seamless and efficient user interactions.",
   profileImage: "/abid_img_1750579704980.jpg" // Adjust path as needed
@@ -18,8 +17,7 @@ export const socialLinks = {
   linkedin: "https://www.linkedin.com/in/shkabid40/",
   twitter: "https://x.com/AbidShaikh550",
   discord: "https://discord.com/users/1288153530892423199",
-  email: `mailto:${personalInfo.email}`,
-  phone: `tel:${personalInfo.phone}`
+  email: `mailto:${personalInfo.email}`
 };
 
 export const skills = [

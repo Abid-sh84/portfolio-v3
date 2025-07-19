@@ -102,18 +102,6 @@ export default function Contact() {
                   </a>
                 </div>
               </motion.div>
-
-              <motion.div variants={itemVariants} className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-full bg-portfolio-accent/20 flex items-center justify-center text-portfolio-accent flex-shrink-0">
-                  <i className="fas fa-phone"></i>
-                </div>
-                <div className="text-left">
-                  <h4 className="font-medium text-white">Phone</h4>
-                  <a href={`tel:${personalInfo.phone}`} className="text-gray-300 hover:text-portfolio-accent transition-colors">
-                    {personalInfo.phone}
-                  </a>
-                </div>
-              </motion.div>
             </div>
             
             {/* Right Column - Social Media & CTA */}

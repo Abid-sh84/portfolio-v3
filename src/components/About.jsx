@@ -110,16 +110,6 @@ export default function About() {
               <span className="px-3 py-1 bg-black/30 border border-gray-700/30 rounded-full text-sm text-gray-300">Digital Craftsman</span>
               
               <span className="px-3 py-1 bg-black/30 border border-gray-700/30 rounded-full text-sm text-gray-300">Learner</span>
-            </motion.div>            <motion.div variants={itemVariants} className="pt-4">
-              <a
-                href="https://drive.google.com/file/d/10r8ctpfQR9rlPPDGUpPs1L8oxqL-ipxE/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2 rounded-md bg-portfolio-accent text-gray-900 font-medium transition hover:bg-opacity-80 inline-flex items-center space-x-2 text-sm"
-              >
-                <span>See Resume</span>
-                <i className="fas fa-arrow-right text-xs"></i>
-              </a>
             </motion.div>
           </motion.div>
         </div>

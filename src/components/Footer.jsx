@@ -103,12 +103,6 @@ export default function Footer() {
                   {personalInfo.email}
                 </a>
               </li>
-              <li className="flex items-start">
-                <i className="fas fa-phone text-portfolio-accent mr-2 mt-1"></i>
-                <a href={socialLinks.phone} className="text-gray-300 hover:text-portfolio-accent transition-colors">
-                  {personalInfo.phone}
-                </a>
-              </li>
             </ul>
           </div>
         </div>
