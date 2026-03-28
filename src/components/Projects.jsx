@@ -1,144 +1,111 @@
-import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { projects } from '../lib/constants';
+import { motion } from 'framer-motion'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { projects } from '@/lib/constants'
+import { ExternalLink, CheckCircle2, Clock } from 'lucide-react'
 
 export default function Projects() {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <section id="projects" className="py-20 bg-portfolio-dark" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-24">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-16"
+          className="mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-            My <span className="text-portfolio-accent">Projects</span>
-          </motion.h2>
-          <motion.div variants={itemVariants} className="w-20 h-1 bg-portfolio-accent mx-auto mb-6"></motion.div>
-          <motion.p variants={itemVariants} className="text-gray-300 max-w-2xl mx-auto">
-            Here are some of the projects I've worked on. Each project showcases different skills and technologies.
-          </motion.p>
+          <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">03 — What I've Built</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">Featured Projects</h2>
+          <p className="text-sm text-muted-foreground max-w-md">Real-world applications designed, built, and deployed from scratch.</p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projects.map((project) => (
+        <div className="flex flex-col gap-6">
+          {projects.map((project, i) => (
             <motion.div
               key={project.id}
-              variants={itemVariants}
-              className="bg-portfolio-primary rounded-lg overflow-hidden shadow-xl border border-portfolio-secondary hover:shadow-portfolio-accent/20 transition-shadow"
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
             >
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={project.imageUrl}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-white">{project.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{project.duration}</p>
-                <p className="text-gray-300 mb-4 h-24 overflow-hidden">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 text-xs rounded-full bg-portfolio-secondary text-portfolio-accent"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex justify-between">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md bg-portfolio-accent text-gray-900 text-sm font-medium transition hover:bg-opacity-80"
-                  >
-                    Live Demo
-                  </a>
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md border border-portfolio-accent text-portfolio-accent text-sm transition hover:bg-portfolio-accent/10"
-                  >
-                    View Code
-                  </a>
-                </div>
-              </div>
+              <Card className="hover:border-zinc-600 transition-all duration-300 overflow-hidden">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div className="flex flex-col gap-2">
+                      {/* Badges row */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge
+                          variant="secondary"
+                          className={`gap-1.5 text-xs font-normal ${project.status === 'Deployed' ? 'text-zinc-300' : 'text-zinc-400'}`}
+                        >
+                          {project.status === 'Deployed'
+                            ? <CheckCircle2 size={11} />
+                            : <Clock size={11} />
+                          }
+                          {project.status}
+                        </Badge>
+                        <span className="text-xs font-mono text-muted-foreground">{project.stack}</span>
+                      </div>
+                      {/* Title */}
+                      <CardTitle className="text-xl font-bold tracking-tight">{project.title}</CardTitle>
+                      <CardDescription className="font-mono text-xs">{project.subtitle}</CardDescription>
+                    </div>
+
+                    {/* Links */}
+                    <div className="flex gap-2 flex-shrink-0">
+                      {project.githubUrl !== '#' && (
+                        <Button asChild variant="outline" size="icon">
+                          <a href={project.githubUrl} target="_blank" rel="noreferrer" aria-label="GitHub">
+                            <i className="fab fa-github" style={{ fontSize: '15px' }}></i>
+                          </a>
+                        </Button>
+                      )}
+                      {project.liveUrl !== '#' && (
+                        <Button asChild variant="outline" size="icon">
+                          <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label="Live">
+                            <ExternalLink size={15} />
+                          </a>
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="flex flex-col gap-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+
+                  <Separator />
+
+                  {/* Highlights */}
+                  <ul className="flex flex-col gap-2">
+                    {project.highlights.map((h, j) => (
+                      <li key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <CheckCircle2 size={13} className="text-zinc-500 shrink-0 mt-0.5" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Separator />
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map(tech => (
+                      <Badge key={tech} variant="outline" className="text-xs font-normal font-mono text-muted-foreground">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
-        </motion.div>        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mt-16"
-        >
-          <Link to="/projects">
-            <motion.button 
-              variants={itemVariants}
-              className="px-8 py-3 rounded-md border-2 border-portfolio-accent text-portfolio-accent font-medium transition hover:bg-portfolio-accent/10 inline-flex items-center"
-            >
-              <i className="fas fa-laptop-code mr-2"></i>
-              View All Projects
-            </motion.button>
-          </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
-  );
+  )
 }

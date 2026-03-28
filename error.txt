@@ -1,0 +1,25 @@
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[31m✗[39m Build failed in 3.70s
+[31merror during build:
+[31msrc/components/Hero.jsx (7:9): "Github" is not exported by "node_modules/lucide-react/dist/esm/lucide-react.js", imported by "src/components/Hero.jsx".[31m
+file: [36mD:/Abid/newversion/src/components/Hero.jsx:7:9[31m
+[33m
+5: import { Separator } from '@/components/ui/separator'
+6: import { personalInfo, socialLinks } from '@/lib/constants'
+7: import { Github, Linkedin, Mail, Twitter, ArrowDown, MapPin } from 'lucide-react'
+            ^
+8: 
+9: const roles = ['Full Stack Developer', 'MERN Stack Engineer', 'AI Integration Developer', 'Backend Developer']
+[31m
+    at getRollupError (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at Module.error (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:16811:16)
+    at Module.traceVariable (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:17260:29)
+    at ModuleScope.findVariable (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:14909:39)
+    at FunctionScope.findVariable (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:5633:38)
+    at FunctionBodyScope.findVariable (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:5633:38)
+    at Identifier.bind (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:5407:40)
+    at CallExpression.bind (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:2794:28)
+    at CallExpression.bind (file:///D:/Abid/newversion/node_modules/rollup/dist/es/shared/node-entry.js:11994:15)[39m

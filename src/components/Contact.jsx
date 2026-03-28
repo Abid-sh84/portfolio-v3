@@ -1,150 +1,169 @@
-import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { personalInfo, socialLinks } from '../lib/constants';
-import './Contact.css';
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { personalInfo, socialLinks } from '@/lib/constants'
+import { Mail, MapPin, Send, CheckCircle } from 'lucide-react'
 
 export default function Contact() {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [sent, setSent] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
+  const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+    const subject = encodeURIComponent(`Message from ${form.name}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`)
+    window.open(`mailto:${personalInfo.email}?subject=${subject}&body=${body}`)
+    setSent(true)
+    setTimeout(() => setSent(false), 4000)
+  }
 
   return (
-    <section id="contact" className="py-20 bg-portfolio-primary" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 bg-card/30">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-16"
+          className="mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-            Contact <span className="text-portfolio-accent">Me</span>
-          </motion.h2>
-          <motion.div variants={itemVariants} className="w-20 h-1 bg-portfolio-accent mx-auto mb-6"></motion.div>
-          <motion.p variants={itemVariants} className="text-gray-300 max-w-2xl mx-auto">
-            Feel free to reach out to me for any queries or opportunities.
-          </motion.p>
+          <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">06 — Let's Talk</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">Get In Touch</h2>
+          <p className="text-sm text-muted-foreground max-w-md">Have a project or want to connect? My inbox is open.</p>
         </motion.div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="max-w-3xl mx-auto bg-portfolio-dark p-8 rounded-lg shadow-xl border border-portfolio-secondary contact-card"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 contact-info-grid">
-            {/* Left Column - Contact Info */}
-            <div className="space-y-6">
-              <motion.h3 variants={itemVariants} className="text-2xl font-semibold text-white text-left">
-                Let's Connect
-              </motion.h3>
-              
-              <motion.div variants={itemVariants} className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-full bg-portfolio-accent/20 flex items-center justify-center text-portfolio-accent flex-shrink-0">
-                  <i className="fas fa-map-marker-alt"></i>
+        <div className="grid lg:grid-cols-5 gap-6">
+          {/* Info */}
+          <motion.div
+            className="lg:col-span-2"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Card className="h-full">
+              <CardContent className="pt-6 flex flex-col gap-6 h-full">
+                <div>
+                  <h3 className="text-base font-semibold text-foreground mb-1">Let's build together</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Whether it's a full-stack project, a collaboration, or just a technical conversation — feel free to reach out.
+                  </p>
                 </div>
-                <div className="text-left">
-                  <h4 className="font-medium text-white">Location</h4>
-                  <p className="text-gray-300">{personalInfo.location}</p>
-                </div>
-              </motion.div>
 
-              <motion.div variants={itemVariants} className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-full bg-portfolio-accent/20 flex items-center justify-center text-portfolio-accent flex-shrink-0">
-                  <i className="fas fa-envelope"></i>
+                <div className="flex flex-col gap-4">
+                  <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-3 group no-underline">
+                    <div className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                      <Mail size={14} className="text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">Email</p>
+                      <p className="text-sm text-foreground group-hover:text-zinc-300 transition-colors font-medium">{personalInfo.email}</p>
+                    </div>
+                  </a>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                      <MapPin size={14} className="text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">Location</p>
+                      <p className="text-sm text-foreground font-medium">{personalInfo.location}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <h4 className="font-medium text-white">Email</h4>
-                  <a href={`mailto:${personalInfo.email}`} className="text-gray-300 hover:text-portfolio-accent transition-colors">
-                    {personalInfo.email}
-                  </a>
+
+                <Separator />
+
+                <div className="flex gap-2">
+                  {[
+                    { href: socialLinks.github, iconClass: 'fab fa-github', label: 'GitHub' },
+                    { href: socialLinks.linkedin, iconClass: 'fab fa-linkedin', label: 'LinkedIn' },
+                    { href: socialLinks.twitter, iconClass: 'fab fa-x-twitter', label: 'Twitter' },
+                  ].map(({ href, iconClass, label }) => (
+                    <Button key={label} asChild variant="outline" size="icon">
+                      <a href={href} target="_blank" rel="noreferrer" aria-label={label}>
+                        <i className={iconClass} style={{ fontSize: '15px' }}></i>
+                      </a>
+                    </Button>
+                  ))}
                 </div>
-              </motion.div>
-            </div>
-            
-            {/* Right Column - Social Media & CTA */}
-            <div className="space-y-6 flex flex-col justify-between">
-              <div>
-                <motion.h3 variants={itemVariants} className="text-2xl font-semibold text-white text-left mb-4">
-                  Follow Me
-                </motion.h3>
-                <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-                  <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-portfolio-dark flex items-center justify-center text-gray-300 hover:text-portfolio-accent hover:border-portfolio-accent border border-gray-700 transition-colors contact-social-icon">
-                    <i className="fab fa-github text-xl"></i>
-                  </a>
-                  <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-portfolio-dark flex items-center justify-center text-gray-300 hover:text-portfolio-accent hover:border-portfolio-accent border border-gray-700 transition-colors contact-social-icon">
-                    <i className="fab fa-linkedin-in text-xl"></i>
-                  </a>
-                  <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-portfolio-dark flex items-center justify-center text-gray-300 hover:text-portfolio-accent hover:border-portfolio-accent border border-gray-700 transition-colors contact-social-icon">
-                    <i className="fab fa-twitter text-xl"></i>
-                  </a>
-                  <a href={socialLinks.discord} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-portfolio-dark flex items-center justify-center text-gray-300 hover:text-portfolio-accent hover:border-portfolio-accent border border-gray-700 transition-colors contact-social-icon">
-                    <i className="fab fa-discord text-xl"></i>
-                  </a>
-                </motion.div>
-              </div>
-              
-              <motion.div variants={itemVariants} className="mt-8">
-                <a 
-                  href={`mailto:${personalInfo.email}?subject=Project Inquiry&body=Hello ${personalInfo.name},%0D%0A%0D%0AI'm interested in discussing a potential project with you.%0D%0A%0D%0ABest regards,%0D%0A[Your Name]`} 
-                  className="inline-block w-full px-6 py-4 bg-portfolio-accent text-gray-900 font-medium rounded-md hover:bg-opacity-90 transition-all transform hover:scale-[1.02] contact-cta-button"
-                >
-                  <i className="fas fa-paper-plane mr-2"></i>
-                  Send Me an Email
-                </a>
-              </motion.div>
-            </div>
-          </div>
-          
-          <motion.div variants={itemVariants} className="mt-10 pt-8 border-t border-gray-700 text-center">
-            <p className="text-gray-400">
-              Looking forward to hearing from you! I'm available for freelance projects and full-time opportunities.
-            </p>
+              </CardContent>
+            </Card>
           </motion.div>
-        </motion.div>
+
+          {/* Form */}
+          <motion.div
+            className="lg:col-span-3"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <Card>
+              <CardContent className="pt-6">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-medium text-muted-foreground">Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Your name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-secondary border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-zinc-500 transition-colors font-sans"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-medium text-muted-foreground">Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-secondary border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-zinc-500 transition-colors font-sans"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-medium text-muted-foreground">Message</label>
+                    <textarea
+                      name="message"
+                      placeholder="Tell me about your project or idea..."
+                      value={form.message}
+                      onChange={handleChange}
+                      rows={5}
+                      required
+                      className="w-full bg-secondary border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-zinc-500 transition-colors resize-none font-sans"
+                    />
+                  </div>
+
+                  {sent && (
+                    <div className="flex items-center gap-2 text-sm text-zinc-300 bg-secondary rounded-md px-4 py-3 border border-border">
+                      <CheckCircle size={14} className="text-zinc-400" />
+                      Mail client opened — thanks for reaching out!
+                    </div>
+                  )}
+
+                  <Button type="submit" className="w-full">
+                    <Send size={14} />
+                    Send Message
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
     </section>
-  );
+  )
 }

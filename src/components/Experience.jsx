@@ -1,126 +1,87 @@
-import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { experiences } from '../lib/constants';
+import { motion } from 'framer-motion'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { experience } from '@/lib/constants'
+import { Briefcase, Calendar, ArrowRight } from 'lucide-react'
 
 export default function Experience() {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <section id="experience" className="py-20 bg-portfolio-primary" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="py-24 bg-card/30">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-16"
+          className="mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-            Work <span className="text-portfolio-accent">Experience</span>
-          </motion.h2>
-          <motion.div variants={itemVariants} className="w-20 h-1 bg-portfolio-accent mx-auto mb-6"></motion.div>
-          <motion.p variants={itemVariants} className="text-gray-300 max-w-2xl mx-auto">
-            My professional journey as a developer.
-          </motion.p>
+          <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">04 — Where I've Worked</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">Experience</h2>
+          <p className="text-sm text-muted-foreground max-w-md">Professional work that shaped my development skills.</p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="relative"
-        >
-          {/* Timeline vertical line */}
-          <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-portfolio-accent rounded-full hidden md:block opacity-20"></div>
-
-          {experiences.map((exp, index) => (
-            <motion.div 
-              key={exp.id} 
-              variants={itemVariants}
-              className={`flex flex-col md:flex-row mb-12 last:mb-0 relative ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}
+        <div className="max-w-3xl">
+          {experience.map((exp, i) => (
+            <motion.div
+              key={exp.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
             >
-              {/* Timeline dot */}
-              <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 rounded-full bg-portfolio-accent hidden md:block z-10"></div>
-              
-              {/* Content */}
-              <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                <div className="bg-portfolio-dark p-6 rounded-lg shadow-xl border border-portfolio-secondary hover:shadow-portfolio-accent/20 transition-shadow">
-                  <h3 className="text-xl font-semibold text-white mb-1">{exp.title}</h3>
-                  <h4 className="text-portfolio-accent mb-2">{exp.company}</h4>
-                  <p className="text-gray-400 text-sm mb-4">{exp.duration}</p>
-                  <p className="text-gray-300 mb-4">{exp.description}</p>
-                  <div className="flex flex-wrap gap-2 justify-start md:justify-end">
-                    {exp.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs rounded-full bg-portfolio-secondary text-portfolio-accent"
-                      >
+              <Card className="hover:border-zinc-600 transition-colors">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div className="flex flex-col gap-1.5">
+                      <h3 className="text-lg font-semibold tracking-tight text-foreground">{exp.title}</h3>
+                      <div className="flex items-center gap-1.5 text-sm text-zinc-400">
+                        <Briefcase size={13} />
+                        <span className="font-medium">{exp.company}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-2">
+                      <Badge variant="secondary" className="text-xs font-normal">
+                        {exp.type}
+                      </Badge>
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
+                        <Calendar size={11} />
+                        {exp.duration}
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="flex flex-col gap-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{exp.description}</p>
+
+                  <Separator />
+
+                  <ul className="flex flex-col gap-2">
+                    {exp.highlights.map((h, j) => (
+                      <li key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <ArrowRight size={13} className="text-zinc-500 shrink-0 mt-0.5" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Separator />
+
+                  <div className="flex flex-wrap gap-2">
+                    {exp.technologies.map(tech => (
+                      <Badge key={tech} variant="outline" className="text-xs font-normal font-mono text-muted-foreground">
                         {tech}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
-                </div>
-              </div>
-
-              {/* Empty space for timeline alignment */}
-              <div className="hidden md:block w-1/2"></div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mt-16"
-        >
-        </motion.div>
+        </div>
       </div>
     </section>
-  );
+  )
 }

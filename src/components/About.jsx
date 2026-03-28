@@ -1,119 +1,118 @@
-import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import { personalInfo } from '../lib/constants';
-import './About.css';
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { personalInfo, socialLinks } from '@/lib/constants'
+import { Mail, MapPin, Code2 } from 'lucide-react'
+
+const stats = [
+  { value: '2+', label: 'Projects Built' },
+  { value: '1', label: 'Internship' },
+  { value: 'MERN', label: 'Core Stack' },
+  { value: 'AI', label: 'Focus Area' },
+]
+
+const workingWith = [
+  'React.js', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO',
+  'REST APIs', 'Gemini AI', 'Clerk', 'Razorpay', 'FCM',
+]
 
 export default function About() {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <section id="about" className="py-20 bg-portfolio-dark" ref={ref} style={{ boxShadow: 'none' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-12"
+    <section id="about" className="py-24">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header */}
+        <motion.div
+          className="mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
-          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-            About <span className="text-portfolio-accent">Me</span>
-          </motion.h2>
-          <motion.div variants={itemVariants} className="w-20 h-1 bg-portfolio-accent mx-auto"></motion.div>
-        </motion.div>        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="md:col-span-5 flex justify-center"
-          >            <motion.div 
-              variants={itemVariants}
-              className="relative"
-            >              <div className="w-full max-w-[250px] md:max-w-md h-auto rounded-lg overflow-hidden mb-4 about-image-container mx-auto">
-                <img 
-                  src="/assets/abid_img_1750579704980.jpg" 
-                  alt={`${personalInfo.name}`} 
-                  className="w-full object-contain about-image" 
-                  style={{ boxShadow: 'none', aspectRatio: '3/4', maxHeight: '400px' }}
-                />
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-4 border-portfolio-accent rounded-lg hidden md:block"></div>
-            </motion.div>
-          </motion.div>          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="space-y-4 md:col-span-7"
-          ><motion.h3 variants={itemVariants} className="text-2xl font-semibold">
-              The <span className="text-portfolio-accent">Story</span> Behind The Code
-            </motion.h3>
-            
-            <motion.p variants={itemVariants} className="text-gray-300">
-             The story behind every line of my code begins with a deep passion for crafting meaningful digital experiences. I specialize in transforming blank screens into responsive, user-friendly interfaces that not only function well but feel intuitive.
-            </motion.p>
-            
-            <motion.div variants={itemVariants} className="mt-4 bg-black/20 border border-gray-800/50 rounded-lg p-4">
-              <p className="text-portfolio-accent italic">
-              I build seamless MERN stack web applications with a focus on clean design, interactive UI, and real-world problem solving
-              </p>
-            </motion.div>
-            
-            <motion.p variants={itemVariants} className="text-gray-300 mt-4">
-              Beyond my work with the MERN stack, I explore new technologies and design principles, believing that great software 
-              comes from blending technical excellence with human-centered design. My academic foundation at Mumbai University SMT. CHM College, Ulhasnagar 2023 - 2026 (Expected)
-              (9.5 CGPA) empowers me to turn challenges into opportunities for growth.
-            </motion.p>
-            
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mt-4">
-              <span className="px-3 py-1 bg-black/30 border border-gray-700/30 rounded-full text-sm text-gray-300">Problem Solver</span>
-              <span className="px-3 py-1 bg-black/30 border border-gray-700/30 rounded-full text-sm text-gray-300">Digital Craftsman</span>
-              
-              <span className="px-3 py-1 bg-black/30 border border-gray-700/30 rounded-full text-sm text-gray-300">Learner</span>
-            </motion.div>
+          <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">01 — Who I Am</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">About Me</h2>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-14 items-start">
+          {/* Left */}
+          <motion.div
+            className="flex flex-col gap-5"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              I'm a <span className="text-foreground font-medium">Full Stack Developer</span> with strong expertise in the MERN stack, building production-ready web applications from the ground up. I focus on writing clean, scalable code and delivering seamless user experiences.
+            </p>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              I'm passionate about integrating <span className="text-foreground font-medium">AI capabilities</span> into web applications — from conversational tutoring and vector search to eye/lip attention tracking. I believe AI will be at the core of every impactful product.
+            </p>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Currently pursuing my <span className="text-foreground font-medium">BSc in Computer Science</span> from Mumbai University while actively building real-world projects and expanding my technical depth.
+            </p>
+
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <MapPin size={12} />
+              {personalInfo.location}
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Button asChild>
+                <a href={`mailto:${personalInfo.email}`}>
+                  <Mail size={14} />
+                  Get in Touch
+                </a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href={socialLinks.github} target="_blank" rel="noreferrer">
+                  <i className="fab fa-github" style={{ fontSize: '14px' }}></i>
+                  View GitHub
+                </a>
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Right */}
+          <motion.div
+            className="flex flex-col gap-4"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3">
+              {stats.map((s, i) => (
+                <Card key={i} className="hover:border-zinc-600 transition-colors cursor-default">
+                  <CardContent className="pt-5 pb-5 text-center flex flex-col gap-1">
+                    <span className="text-2xl font-bold font-mono tracking-tight text-foreground">{s.value}</span>
+                    <span className="text-xs text-muted-foreground">{s.label}</span>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Working with */}
+            <Card>
+              <CardContent className="pt-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <Code2 size={13} className="text-muted-foreground" />
+                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Working with</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {workingWith.map(tag => (
+                    <Badge key={tag} variant="secondary" className="text-xs font-normal font-mono">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
       </div>
     </section>
-  );
+  )
 }
