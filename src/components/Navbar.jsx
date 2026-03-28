@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { personalInfo } from '@/lib/constants'
 
 const navLinks = [
@@ -61,21 +62,27 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Contact Link (desktop) */}
-          <Button asChild variant="outline" size="sm" className="hidden md:inline-flex text-xs">
-            <a href={`mailto:${personalInfo.email}`}>Contact</a>
-          </Button>
+          {/* Actions (desktop) */}
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
+            <Button asChild variant="outline" size="sm" className="text-xs">
+              <a href={`mailto:${personalInfo.email}`}>Contact</a>
+            </Button>
+          </div>
 
-          {/* Hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 cursor-pointer bg-transparent border-none p-1"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            <span className="block w-5 h-0.5 bg-foreground rounded" />
-            <span className="block w-5 h-0.5 bg-foreground rounded" />
-            <span className="block w-5 h-0.5 bg-foreground rounded" />
-          </button>
+          <div className="md:hidden flex items-center gap-3">
+            <ThemeToggle />
+            {/* Hamburger */}
+            <button
+              className="flex flex-col gap-1.5 cursor-pointer bg-transparent border-none p-1"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              <span className="block w-5 h-0.5 bg-foreground rounded" />
+              <span className="block w-5 h-0.5 bg-foreground rounded" />
+              <span className="block w-5 h-0.5 bg-foreground rounded" />
+            </button>
+          </div>
         </div>
 
         {/* Scrolled border */}
@@ -117,7 +124,7 @@ export default function Navbar() {
 
       <style>{`
         nav.nav-scrolled {
-          background: hsl(0 0% 6% / 0.95) !important;
+          background: hsl(var(--background) / 0.95) !important;
           padding-top: 12px !important;
           padding-bottom: 12px !important;
           backdrop-filter: blur(20px) !important;
