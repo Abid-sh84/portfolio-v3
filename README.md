@@ -1,6 +1,5 @@
 # Abid Shaikh - Portfolio Website
 
-![Portfolio Preview](/public/assets/abid_portfolio.jpeg)
 
 <div align="center">
   
