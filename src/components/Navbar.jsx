@@ -1,139 +1,150 @@
-import { useEffect, useRef } from 'react'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { personalInfo } from '@/lib/constants'
+import { socialLinks } from '@/lib/constants'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Education', href: '#education' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Portfolio', href: '#hero' },
+  { label: 'Blog', href: '#' },
+  { label: 'Products', href: '#' },
 ]
 
 export default function Navbar() {
-  const navRef = useRef(null)
-  const menuRef = useRef(null)
+  const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
     const onScroll = () => {
-      navRef.current?.classList.toggle('nav-scrolled', window.scrollY > 40)
+      const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'education', 'contact']
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i])
+        if (el && window.scrollY >= el.offsetTop - 80) {
+          setActiveSection(sections[i])
+          break
+        }
+      }
     }
-    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const toggleMenu = () => menuRef.current?.classList.toggle('menu-open')
-  const closeMenu = () => menuRef.current?.classList.remove('menu-open')
+  const handleNavClick = (e, href) => {
+    if (href === '#') return
+    e.preventDefault()
+    const el = document.querySelector(href)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <>
-      <nav
-        ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          padding: '18px 0',
-        }}
-      >
-        <div
-          className="nav-inner max-w-5xl mx-auto px-6 flex items-center gap-8"
-          style={{ backdropFilter: 'none', transition: 'all 0.3s ease' }}
+    <nav className="site-nav">
+      <div className="max-w-5xl mx-auto px-6 w-full flex items-center gap-6">
+
+        {/* Pixel logo */}
+        <a
+          href="#hero"
+          onClick={(e) => handleNavClick(e, '#hero')}
+          className="font-pixel text-sm text-foreground no-underline flex-shrink-0 leading-none"
+          style={{ fontSize: '13px', letterSpacing: '0.05em' }}
+          aria-label="Home"
         >
-          {/* Logo */}
-          <a href="#hero" className="font-mono text-base font-semibold text-foreground mr-auto no-underline flex items-center gap-0.5">
-            <span className="text-muted-foreground">&lt;</span>
-            <span>{personalInfo.name.split(' ')[0]}</span>
-            <span className="text-muted-foreground">/&gt;</span>
-          </a>
+          AS:
+        </a>
 
-          {/* Desktop Links */}
-          <ul className="hidden md:flex items-center gap-1 list-none">
-            {navLinks.map(link => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-md hover:bg-accent no-underline"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+        {/* Spacer */}
+        <div className="flex-1" />
 
-          {/* Actions (desktop) */}
-          <div className="hidden md:flex items-center gap-2">
-            <ThemeToggle />
-            <Button asChild variant="outline" size="sm" className="text-xs">
-              <a href={`mailto:${personalInfo.email}`}>Contact</a>
-            </Button>
-          </div>
-
-          <div className="md:hidden flex items-center gap-3">
-            <ThemeToggle />
-            {/* Hamburger */}
-            <button
-              className="flex flex-col gap-1.5 cursor-pointer bg-transparent border-none p-1"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              <span className="block w-5 h-0.5 bg-foreground rounded" />
-              <span className="block w-5 h-0.5 bg-foreground rounded" />
-              <span className="block w-5 h-0.5 bg-foreground rounded" />
-            </button>
-          </div>
-        </div>
-
-        {/* Scrolled border */}
-        <div
-          id="nav-border"
-          className="absolute bottom-0 left-0 right-0 h-px bg-border opacity-0 transition-opacity duration-300"
-        />
-      </nav>
-
-      {/* Mobile Menu */}
-      <div
-        ref={menuRef}
-        className="mobile-overlay fixed inset-0 z-40 bg-background flex-col items-center justify-center hidden"
-        style={{ display: 'none' }}
-      >
-        <ul className="flex flex-col items-center gap-8 list-none">
-          {navLinks.map(link => (
-            <li key={link.href}>
+        {/* Nav links */}
+        <div className="hidden md:flex items-center gap-1">
+          {navLinks.map(link => {
+            const sectionId = link.href.replace('#', '')
+            const isActive = activeSection === sectionId && link.href !== '#'
+            return (
               <a
+                key={link.label}
                 href={link.href}
-                onClick={closeMenu}
-                className="text-2xl font-semibold text-foreground no-underline hover:text-muted-foreground transition-colors"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`px-3 py-1 rounded text-sm no-underline transition-colors ${
+                  isActive
+                    ? 'text-foreground font-semibold'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 {link.label}
               </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href={`mailto:${personalInfo.email}`}
-              onClick={closeMenu}
-              className="text-2xl font-semibold text-muted-foreground no-underline hover:text-foreground transition-colors"
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
+            )
+          })}
+        </div>
+
+        {/* Search */}
+        <button
+          className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded border border-border bg-transparent text-muted-foreground text-xs cursor-pointer hover:border-ring transition-colors"
+          aria-label="Search"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+          </svg>
+          <span className="font-mono text-[10px]">Ctrl K</span>
+        </button>
+
+        {/* GitHub */}
+        <a
+          href={socialLinks.github}
+          target="_blank"
+          rel="noreferrer"
+          className="hidden md:flex items-center justify-center w-8 h-8 text-muted-foreground hover:text-foreground transition-colors no-underline"
+          aria-label="GitHub"
+        >
+          <i className="fab fa-github text-base" />
+        </a>
+
+        {/* Divider */}
+        <div className="hidden md:block w-px h-4 bg-border" />
+
+        {/* Theme toggle */}
+        <ThemeToggle />
+
+        {/* Mobile hamburger — simple */}
+        <button
+          id="mobile-menu-btn"
+          className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground cursor-pointer"
+          onClick={() => {
+            const menu = document.getElementById('mobile-menu')
+            if (menu) menu.classList.toggle('hidden')
+          }}
+          aria-label="Menu"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
       </div>
 
-      <style>{`
-        nav.nav-scrolled {
-          background: hsl(var(--background) / 0.95) !important;
-          padding-top: 12px !important;
-          padding-bottom: 12px !important;
-          backdrop-filter: blur(20px) !important;
-          border-bottom: 1px solid hsl(var(--border));
-        }
-        .mobile-overlay.menu-open {
-          display: flex !important;
-        }
-      `}</style>
-    </>
+      {/* Mobile dropdown */}
+      <div
+        id="mobile-menu"
+        className="hidden absolute top-12 left-0 right-0 border-b border-border bg-background flex-col py-2"
+      >
+        {navLinks.map(link => (
+          <a
+            key={link.label}
+            href={link.href}
+            onClick={(e) => {
+              handleNavClick(e, link.href)
+              document.getElementById('mobile-menu')?.classList.add('hidden')
+            }}
+            className="px-6 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-accent no-underline transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href={socialLinks.github}
+          target="_blank"
+          rel="noreferrer"
+          className="px-6 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-accent no-underline transition-colors flex items-center gap-2"
+        >
+          <i className="fab fa-github" />
+          GitHub
+        </a>
+      </div>
+    </nav>
   )
 }

@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { skills } from '@/lib/constants'
 
 const categories = ['All', ...Object.keys(skills)]
+
+// Category icons (emoji-based for visual pop)
+const catIcons = {
+  'Languages': '{}',
+  'Frameworks & Technologies': '</>',
+  'Databases': '🗄',
+  'APIs & Communication': '⚡',
+  'AI & Tools': '🤖',
+}
 
 export default function Skills() {
   const [active, setActive] = useState('All')
@@ -16,7 +22,7 @@ export default function Skills() {
       : (skills[active] || []).map(s => ({ ...s, cat: active }))
 
   return (
-    <section id="skills" className="py-24 bg-card/30">
+    <section id="skills" className="py-24 screen-line bg-card/20">
       <div className="max-w-5xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -26,12 +32,16 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">02 — What I Know</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">Skills & Technologies</h2>
-          <p className="text-sm text-muted-foreground max-w-md">The tools and technologies I use to build full-stack applications.</p>
+          <p className="section-label mb-3">02 — What I Know</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">
+            Skills &amp; Technologies
+          </h2>
+          <p className="text-sm text-muted-foreground max-w-md">
+            The tools and technologies I use to build full-stack applications.
+          </p>
         </motion.div>
 
-        {/* Category Tabs */}
+        {/* Category filter — pill row */}
         <motion.div
           className="flex flex-wrap gap-2 mb-10"
           initial={{ opacity: 0 }}
@@ -43,20 +53,21 @@ export default function Skills() {
             <button
               key={cat}
               onClick={() => setActive(cat)}
-              className={`text-xs px-3 py-1.5 rounded-md border font-medium font-mono transition-all duration-200 cursor-pointer
-                ${active === cat
+              className={`text-xs px-3.5 py-1.5 rounded-full border font-mono font-medium transition-all duration-200 cursor-pointer ${
+                active === cat
                   ? 'bg-foreground text-background border-foreground'
-                  : 'bg-transparent text-muted-foreground border-border hover:text-foreground hover:border-zinc-500'
-                }`}
+                  : 'bg-transparent text-muted-foreground border-border hover:text-foreground hover:border-ring'
+              }`}
             >
+              {catIcons[cat] && <span className="mr-1.5 text-xs opacity-70">{catIcons[cat]}</span>}
               {cat}
             </button>
           ))}
         </motion.div>
 
-        {/* Skills Grid */}
+        {/* Skills grid */}
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5"
           layout
         >
           <AnimatePresence mode="popLayout">
@@ -64,21 +75,19 @@ export default function Skills() {
               <motion.div
                 key={skill.name}
                 layout
-                initial={{ opacity: 0, scale: 0.88 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.88 }}
-                transition={{ duration: 0.2, delay: i * 0.02 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.18, delay: i * 0.015 }}
               >
-                <Card className="hover:border-zinc-600 transition-colors cursor-default group">
-                  <CardContent className="py-4 px-3 flex flex-col items-center gap-2 text-center">
-                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors font-mono">
-                      {skill.name}
-                    </span>
-                    <Badge variant="outline" className="text-xs font-normal text-muted-foreground px-1.5 py-0">
-                      {skill.cat}
-                    </Badge>
-                  </CardContent>
-                </Card>
+                <div className="bento-card py-4 px-3 flex flex-col items-center gap-2 text-center cursor-default group hover:bg-accent transition-colors">
+                  <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors font-mono">
+                    {skill.name}
+                  </span>
+                  <span className="text-xs text-muted-foreground/60 font-mono leading-none">
+                    {skill.cat.split(' ')[0]}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>

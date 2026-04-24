@@ -46,6 +46,7 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
+        pixel: ["'Press Start 2P'", "monospace"],
       },
     },
   },
