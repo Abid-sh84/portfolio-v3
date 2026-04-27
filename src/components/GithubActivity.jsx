@@ -104,7 +104,7 @@ export default function GithubActivity() {
   };
 
   return (    
-    <section id="github-activity" className="pt-4 pb-20 bg-[#0F0F0F]" ref={containerRef}>
+    <section id="github-activity" className="pt-4 pb-20 bg-[#0F0F0F] dark:bg-[#0F0F0F] github-section" ref={containerRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           variants={containerVariants}
@@ -119,7 +119,7 @@ export default function GithubActivity() {
             <motion.span variants={itemVariants} className="text-[#3B82F6] text-2xl">
               <i className="fab fa-github"></i>
             </motion.span>
-            <motion.h3 variants={itemVariants} className="text-xl font-bold">
+            <motion.h3 variants={itemVariants} className="text-xl font-bold text-white dark:text-white github-active-title">
               I am active on
             </motion.h3>
           </motion.div>
@@ -134,7 +134,7 @@ export default function GithubActivity() {
           {contributionData.loading ? (
             <motion.div variants={itemVariants} className="text-center py-8">
               <div className="inline-block w-6 h-6 border-t-2 border-blue-500 border-solid rounded-full animate-spin"></div>
-              <p className="mt-2 text-gray-300">Loading GitHub contribution data...</p>
+              <p className="mt-2 text-gray-300 dark:text-gray-300 github-loading-text">Loading GitHub contribution data...</p>
             </motion.div>
           ) : contributionData.error ? (
             <motion.div variants={itemVariants} className="text-center py-8 text-red-400">
@@ -144,7 +144,7 @@ export default function GithubActivity() {
           ) : (
             <motion.div 
               variants={itemVariants} 
-              className="bg-[#0d1117] border border-[#30363d] p-4 rounded-lg overflow-auto"
+              className="bg-[#0d1117] dark:bg-[#0d1117] border dark:border-[#30363d] p-4 rounded-lg overflow-auto github-card"
               ref={calendarRef}
             >
               {/* User info section */}
@@ -157,8 +157,8 @@ export default function GithubActivity() {
                   />
                 )}
                 <div>
-                  <h4 className="text-white font-medium">{contributionData.username}</h4>
-                  <p className="text-gray-400 text-sm">{contributionData.totalContributions} contributions in the last year</p>
+                  <h4 className="text-white dark:text-white font-medium github-username">{contributionData.username}</h4>
+                  <p className="text-gray-400 dark:text-gray-400 text-sm github-contributions">{contributionData.totalContributions} contributions in the last year</p>
                 </div>
               </div>
               
@@ -184,12 +184,12 @@ export default function GithubActivity() {
                 {/* Last push information */}
                 <div className="last-push-info">
                   {contributionData.lastPushDate ? (
-                    <div className="text-white text-sm mt-3">
-                      Last push on <span className="text-blue-500">{contributionData.lastPushDate.formatted}</span>
+                    <div className="text-white dark:text-white text-sm mt-3 github-last-push">
+                      Last push on <span className="text-blue-500 dark:text-blue-500 github-push-date">{contributionData.lastPushDate.formatted}</span>
                     </div>
                   ) : (
-                    <div className="text-white text-sm mt-3">
-                      Last push on <span className="text-blue-500">2 Jul 2025</span>
+                    <div className="text-white dark:text-white text-sm mt-3 github-last-push">
+                      Last push on <span className="text-blue-500 dark:text-blue-500 github-push-date">2 Jul 2025</span>
                     </div>
                   )}
                 </div>

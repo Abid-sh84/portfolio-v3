@@ -10,6 +10,24 @@
   --github-grid-level-2: #006d32;
   --github-grid-level-3: #26a641;
   --github-grid-level-4: #39d353;
+  --github-gradient-1: rgba(27, 31, 35, 0.8);
+  --github-gradient-2: rgba(13, 17, 23, 0.9);
+  --github-link-color: #58a6ff;
+}
+
+/* Light theme overrides */
+html.light {
+  --github-bg-color: #ffffff;
+  --github-border-color: #d0d7de;
+  --github-text-color: #57606a;
+  --github-grid-empty: #eaeef2;
+  --github-grid-level-1: #dafbe1;
+  --github-grid-level-2: #85e89d;
+  --github-grid-level-3: #34d399;
+  --github-grid-level-4: #1a7f0e;
+  --github-gradient-1: rgba(240, 246, 252, 0.8);
+  --github-gradient-2: rgba(255, 255, 255, 0.9);
+  --github-link-color: #0969da;
 }
 
 /* Custom GitHub Calendar */
@@ -52,7 +70,7 @@
   justify-content: center;
   margin: 0 auto;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(27, 31, 35, 0.8), rgba(13, 17, 23, 0.9));
+  background: linear-gradient(135deg, var(--github-gradient-1), var(--github-gradient-2));
   border-radius: 12px;
   border: 1px solid var(--github-border-color);
 }
@@ -104,15 +122,27 @@
   cursor: pointer;
 }
 
+html.light .grid-cell {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
 .grid-cell:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   transform: scale(1.1);
+}
+
+html.light .grid-cell:hover {
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 /* Contribution levels with better contrast */
 .contribution-level-0 {
   background-color: var(--github-grid-empty);
   border: 1px solid rgba(27, 31, 35, 0.06);
+}
+
+html.light .contribution-level-0 {
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .contribution-level-1 {
@@ -165,6 +195,10 @@
   border: 1px solid rgba(27, 31, 35, 0.06);
 }
 
+html.light .legend-cell {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
 /* Last push information */
 .last-push-info {
   text-align: center;
@@ -177,9 +211,51 @@
   border: 1px solid var(--github-border-color);
 }
 
+html.light .last-push-info {
+  background: rgba(240, 246, 252, 0.5);
+}
+
 .last-push-info span {
   color: #58a6ff;
   font-weight: 500;
+}
+
+html.light .last-push-info span {
+  color: #0969da;
+}
+
+/* Light theme styles for component elements */
+html.light .github-section {
+  background-color: #ffffff;
+}
+
+html.light .github-active-title {
+  color: #000000;
+}
+
+html.light .github-loading-text {
+  color: #666666;
+}
+
+html.light .github-card {
+  background-color: #ffffff;
+  border-color: #d0d7de;
+}
+
+html.light .github-username {
+  color: #000000;
+}
+
+html.light .github-contributions {
+  color: #57606a;
+}
+
+html.light .github-last-push {
+  color: #000000;
+}
+
+html.light .github-push-date {
+  color: #0969da;
 }
 
 /* Responsive adjustments */
