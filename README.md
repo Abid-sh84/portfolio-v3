@@ -1,153 +1,36 @@
-# Abid Shaikh - Portfolio Website
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Getting Started
 
-<div align="center">
-  
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+First, run the development server:
 
-</div>
-
-## 🌟 Overview
-
-This is my personal portfolio website built with React, Vite, and Tailwind CSS. It showcases my projects, skills, and professional experiences as a Full Stack Developer specializing in the MERN stack.
-
-## 🚀 Features
-
-- **Responsive Design**: Works seamlessly across desktop, tablet, and mobile devices
-- **Dark Mode**: Modern dark-themed UI for comfortable viewing
-- **Interactive UI**: Smooth animations and transitions using Framer Motion
-- **Project Showcase**: Detailed project cards with links to live demos and repositories
-- **Skills Visualization**: Visual representation of technical skills with proficiency levels
-- **Blog Section**: Technical articles on web development topics
-- **GitHub Integration**: Display of recent GitHub activity
-- **Contact Form**: Direct way to connect with me
-
-## 🛠️ Tech Stack
-
-- **Frontend Framework**: React.js
-- **Build Tool**: Vite
-- **CSS Framework**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Icons**: Font Awesome
-- **Deployment**: Vercel
-
-## 📋 Project Structure
-
-```
-version3/
-├── public/               # Static assets
-│   ├── assets/           # Images and other media
-│   └── resume.pdf        # Downloadable resume
-├── src/
-│   ├── components/       # React components
-│   ├── pages/            # Page components
-│   │   └── blogs/        # Blog post pages
-│   ├── lib/              # Utilities and config
-│   └── assets/           # Local assets
-├── index.html            # Entry HTML file
-├── tailwind.config.js    # Tailwind configuration
-└── vite.config.js        # Vite configuration
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## 🚦 Getting Started
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Prerequisites
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-- Node.js (v16+)
-- npm or yarn
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Installation
+## Learn More
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Abid-sh84/portfolio.git
-   cd portfolio
-   ```
+To learn more about Next.js, take a look at the following resources:
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn
-   ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-4. Open your browser and visit `http://localhost:5173`
+## Deploy on Vercel
 
-## 🔧 Configuration
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-This project uses a central configuration file for personal information, skills, projects, and blog posts. To customize the content:
-
-1. Edit the `src/lib/constants.js` file to update:
-   - Personal information
-   - Social links
-   - Skills and proficiency levels
-   - Project details
-   - Work experience
-   - Blog content
-
-2. Replace images in the `public/assets/` directory with your own.
-
-## 📱 Deployment
-
-This website is deployed using Vercel. To deploy your own version:
-
-1. Create a Vercel account at [vercel.com](https://vercel.com)
-2. Install the Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
-3. Deploy the project:
-   ```bash
-   vercel
-   ```
-
-## 🎨 Customization
-
-### Themes
-
-The color scheme can be adjusted by modifying the `themeColors` object in `src/lib/constants.js`.
-
-### Adding New Blog Posts
-
-Add new blog posts by updating the `blogPosts` array in `src/lib/constants.js`. Each blog post should include:
-- Unique ID
-- Title
-- Excerpt
-- Featured image URL
-- Publication date
-- Content sections (paragraphs, headings, code blocks, lists)
-
-### Adding New Projects
-
-Add new projects by updating the `projects` array in `src/lib/constants.js`. Include:
-- Project title
-- Description
-- Technologies used
-- Live URL
-- GitHub repository
-- Featured image
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Contact
-
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:muhammadabid9326@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/shkabid40/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Abid-sh84)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/AbidShaikh550)
-
----
-
-Designed & Developed with ❤️ by Abid Shaikh
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
