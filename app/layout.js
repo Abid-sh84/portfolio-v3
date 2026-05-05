@@ -86,6 +86,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
           rel="stylesheet"
         />
+        <meta name="google-site-verification" content="CyYTp5fhSZXsYxieb5SH-4WDADdzZtSmdF8A8-Hj05k" />
         {/* JSON-LD Structured Data — Person schema for Google rich results */}
         <script
           type="application/ld+json"
