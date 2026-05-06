@@ -5,14 +5,20 @@ import { useTheme } from "next-themes";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
+// ── Navigation links config ────────────────────────────────────────────────
+// type: "anchor" = smooth-scroll on home page, hard link from other pages
+//       "route"  = Next.js Link navigation
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "#about", type: "anchor" },
+  { label: "Skills", href: "#skills", type: "anchor" },
+  { label: "Projects", href: "#projects", type: "anchor" },
+  { label: "Experience", href: "#experience", type: "anchor" },
+  { label: "Education", href: "#education", type: "anchor" },
+  { label: "Contact", href: "#contact", type: "anchor" },
+  { label: "Blog", href: "/blog", type: "route" },
 ];
 
 export default function Navbar() {
@@ -20,6 +26,9 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     setMounted(true);
@@ -28,12 +37,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (e, href) => {
+  // Smooth-scroll for anchor links when on home page
+  const handleAnchorClick = (e, href) => {
     e.preventDefault();
     setMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (isHomePage) {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Navigate to home with hash
+      window.location.href = `/${href}`;
     }
   };
 
@@ -50,8 +65,16 @@ export default function Navbar() {
         <nav className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#hero"
-            onClick={(e) => handleNavClick(e, "#hero")}
+            href="/#hero"
+            onClick={(e) => {
+              if (isHomePage) {
+                e.preventDefault();
+                document.getElementById("hero")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
             className="font-pixel text-[11px] text-foreground hover:text-green-500 transition-colors select-none"
             aria-label="Abid Shaikh Home"
             style={{ fontFamily: "'Press Start 2P', monospace" }}
@@ -61,17 +84,40 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <ul className="hidden md:flex items-center gap-1" role="list">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isBlogActive =
+                link.href === "/blog" && pathname.startsWith("/blog");
+
+              if (link.type === "route") {
+                return (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-accent",
+                        isBlogActive
+                          ? "text-green-500 font-medium"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={link.label}>
+                  <a
+                    href={isHomePage ? link.href : `/${link.href}`}
+                    onClick={(e) => handleAnchorClick(e, link.href)}
+                    className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Right Actions */}
@@ -127,17 +173,32 @@ export default function Navbar() {
         {menuOpen && (
           <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md">
             <ul className="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-1" role="list">
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                if (link.type === "route") {
+                  return (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={link.label}>
+                    <a
+                      href={isHomePage ? link.href : `/${link.href}`}
+                      onClick={(e) => handleAnchorClick(e, link.href)}
+                      className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}

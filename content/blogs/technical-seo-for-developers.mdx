@@ -1,0 +1,319 @@
+---
+title: "Technical SEO for Developers: A Complete Guide to Ranking Your Portfolio"
+description: "Master Technical SEO as a developer. Learn Core Web Vitals, structured data, canonical URLs, sitemap generation, and metadata best practices to make your portfolio rank on Google."
+date: "2026-05-06"
+author: "Abid Shaikh"
+category: "SEO"
+tags: ["technical-seo", "nextjs", "web-performance", "structured-data", "google"]
+coverImage: "/technical_seo.jpg"
+keywords:
+  [
+    "technical SEO for developers",
+    "Next.js SEO",
+    "Core Web Vitals",
+    "structured data JSON-LD",
+    "sitemap.xml Next.js",
+    "portfolio SEO",
+    "google ranking developers",
+    "Open Graph tags",
+    "canonical URL",
+  ]
+featured: true
+---
+
+## What Is Technical SEO (And Why Developers Own It)
+
+Most developers treat SEO as a marketing problem. It isn't.
+
+**Technical SEO** is the foundation that determines whether Google can discover, crawl, index, and rank your pages. Unlike on-page SEO (keyword density, content length) or off-page SEO (backlinks), technical SEO is 100% in a developer's control.
+
+As a developer publishing a portfolio or a blog, you are the author, the engineer, and the SEO consultant — all at once. That's an enormous advantage.
+
+In this guide, we'll cover everything you need to rank your developer portfolio or blog, using real code examples from a **Next.js App Router** project.
+
+---
+
+## The Crawl → Index → Rank Pipeline
+
+Before Google can rank your page, three things must happen in sequence:
+
+1. **Crawl** — Googlebot visits your page and reads the HTML.
+2. **Index** — Google stores the page content in its database.
+3. **Rank** — Google decides how high to show your page for a given query.
+
+Technical SEO problems break this pipeline. Let's prevent that.
+
+---
+
+## Core Technical SEO Checklist
+
+### 1. `robots.txt` — Tell Crawlers What to Access
+
+The `robots.txt` file is the first thing Googlebot reads. In Next.js App Router, you can generate it dynamically:
+
+```js
+// app/robots.js
+export default function robots() {
+  return {
+    rules: [{ userAgent: "*", allow: "/" }],
+    sitemap: "https://abids.tech/sitemap.xml",
+  };
+}
+```
+
+> **Rule of thumb:** Block `/api/*` routes and any private paths. Never block `/blog/*` or your main pages.
+
+### 2. `sitemap.xml` — Give Google a Map
+
+A sitemap tells Google every URL on your site. In Next.js, make it dynamic so new blog posts are automatically included:
+
+```js
+// app/sitemap.js
+import { getAllBlogs } from "@/lib/blog";
+
+const SITE_URL = "https://abids.tech";
+
+export default function sitemap() {
+  const blogs = getAllBlogs();
+
+  const blogUrls = blogs.map((blog) => ({
+    url: `${SITE_URL}/blog/${blog.slug}`,
+    lastModified: new Date(blog.frontmatter.date),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [
+    { url: SITE_URL, lastModified: new Date(), priority: 1.0 },
+    { url: `${SITE_URL}/blog`, lastModified: new Date(), priority: 0.9 },
+    ...blogUrls,
+  ];
+}
+```
+
+Every time you drop a new `.mdx` file, it appears in your sitemap automatically. No manual updates needed.
+
+### 3. Canonical URLs — Prevent Duplicate Content
+
+Duplicate content confuses Google. Canonical tags tell it which version of a URL is the "official" one.
+
+```js
+// In generateMetadata()
+alternates: {
+  canonical: `https://abids.tech/blog/${slug}`,
+}
+```
+
+Always set canonical URLs on:
+- Blog posts
+- Category/tag filtered pages (`/blog?category=SEO` → canonical to `/blog`)
+- Any page that can be reached via multiple URLs
+
+### 4. `generateMetadata` — Dynamic, Accurate Metadata
+
+Next.js App Router's `generateMetadata` function gives you **per-page metadata** with full control:
+
+```js
+export async function generateMetadata({ params }) {
+  const blog = getBlogBySlug(params.slug);
+
+  return {
+    title: `${blog.frontmatter.title} | Abid Shaikh`,
+    description: blog.frontmatter.description,
+    openGraph: {
+      type: "article",
+      title: blog.frontmatter.title,
+      description: blog.frontmatter.description,
+      publishedTime: blog.frontmatter.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      creator: "@AbidShaikh550",
+    },
+  };
+}
+```
+
+**Critical fields you must never skip:**
+- `title` (under 60 characters)
+- `description` (120–160 characters)
+- `openGraph.type` = `"article"` for blog posts
+- `twitter.card` = `"summary_large_image"`
+
+---
+
+## JSON-LD Structured Data
+
+Structured data is how Google understands your content beyond raw text. Implement it as `<script type="application/ld+json">` in your page `<head>`.
+
+### BlogPosting Schema
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Technical SEO for Developers",
+  "author": {
+    "@type": "Person",
+    "name": "Abid Shaikh",
+    "url": "https://abids.tech"
+  },
+  "datePublished": "2026-05-06",
+  "keywords": "technical SEO, Next.js, Core Web Vitals"
+}
+```
+
+### BreadcrumbList Schema
+
+Breadcrumbs appear directly in Google search results as rich snippets:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://abids.tech" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://abids.tech/blog" },
+    { "@type": "ListItem", "position": 3, "name": "Technical SEO Guide", "item": "https://abids.tech/blog/technical-seo" }
+  ]
+}
+```
+
+---
+
+## Core Web Vitals — The Performance Factor
+
+Since 2021, Google uses **Core Web Vitals** as a ranking signal. Three metrics matter:
+
+| Metric | What It Measures | Good Threshold |
+|--------|-----------------|---------------|
+| **LCP** | Largest Contentful Paint (loading) | < 2.5s |
+| **INP** | Interaction to Next Paint (interactivity) | < 200ms |
+| **CLS** | Cumulative Layout Shift (visual stability) | < 0.1 |
+
+### Developer Actions to Improve Each
+
+**LCP (Loading Speed):**
+```jsx
+// Always add priority to above-the-fold images
+<Image src={coverImage} alt={title} fill priority />
+```
+
+**CLS (Layout Shifts):**
+```css
+/* Always specify image dimensions */
+img { aspect-ratio: 16/9; }
+```
+
+**INP (Interactivity):**
+- Use Server Components where possible
+- Lazy-load heavy components with `next/dynamic`
+- Avoid large JS bundles on initial render
+
+---
+
+## Open Graph — Social Sharing Optimization
+
+When someone shares your blog on Twitter or LinkedIn, the Open Graph tags control the preview:
+
+```html
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Technical SEO for Developers" />
+<meta property="og:description" content="Master Technical SEO..." />
+<meta property="og:image" content="https://abids.tech/og/technical-seo.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+```
+
+**OG Image Best Practices:**
+- Dimensions: `1200 × 630px` exactly
+- Text: legible at small sizes
+- Branding: include your name/logo
+- Generate dynamically with Next.js `ImageResponse` for scale
+
+---
+
+## Static Generation for SEO
+
+Next.js App Router makes static generation trivially easy for blog posts:
+
+```js
+// Pre-generate all blog post pages at build time
+export async function generateStaticParams() {
+  const slugs = getAllBlogSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+```
+
+This gives you:
+- **Zero server response time** — pages served from CDN edge
+- **Perfect Lighthouse scores** — no runtime rendering overhead
+- **Crawlability** — Google sees fully rendered HTML immediately
+
+---
+
+## The Blog URL Strategy
+
+URL structure directly impacts SEO. Best practices:
+
+| Pattern | Verdict |
+|---------|---------|
+| `/blog/technical-seo-for-developers` | ✅ Best — keyword in URL |
+| `/blog/post-123` | ❌ No keywords |
+| `/2026/05/06/technical-seo` | ❌ Date clutter |
+| `/blog/category/seo/technical-seo-guide` | ⚠️ Too deep |
+
+**Rule:** Keep URLs flat, lowercase, hyphen-separated, keyword-rich.
+
+---
+
+## Keyword Strategy for Developer Blogs
+
+You don't need a paid tool to find keywords. Use this free method:
+
+1. **Google Autocomplete** — Type your topic, screenshot suggestions
+2. **"People Also Ask"** — Google's built-in related questions
+3. **Search Console** — After publishing, check what queries drive impressions
+4. **Competitor gaps** — Find what top developer blogs cover that you don't
+
+Target **long-tail keywords** over short ones:
+
+| Short (hard) | Long-tail (achievable) |
+|-------------|----------------------|
+| "Next.js SEO" | "how to add sitemap to Next.js App Router" |
+| "React performance" | "fix CLS in Next.js Image component" |
+
+---
+
+## My Current SEO Stack
+
+Here's exactly what this blog uses:
+
+- **Framework:** Next.js 16 App Router
+- **Content:** MDX with `gray-matter` frontmatter
+- **Metadata:** `generateMetadata` per page
+- **Schemas:** JSON-LD BlogPosting + BreadcrumbList + Person
+- **Sitemap:** Dynamic `app/sitemap.js`
+- **Robots:** `app/robots.js`
+- **Images:** `next/image` with `priority` on hero images
+- **Fonts:** `next/font/google` for zero-layout-shift font loading
+- **Analytics:** Google Search Console (free)
+
+---
+
+## Next Steps
+
+SEO is a long game. Here's the realistic timeline:
+
+- **Week 1–4:** Submit sitemap to Google Search Console, verify indexing
+- **Month 1–3:** First impressions appear in Search Console
+- **Month 3–6:** First meaningful organic traffic if content is good
+- **Month 6–12:** Compounding traffic if you publish consistently
+
+The developers who win at SEO don't do anything magical. They just **publish consistently**, **structure their content correctly**, and **give Google everything it needs to understand their pages**.
+
+Start with one post. This is yours.
+
+---
+
+*If you found this useful, check out my portfolio at [abids.tech](https://abids.tech) or connect with me on [GitHub](https://github.com/Abid-sh84).*

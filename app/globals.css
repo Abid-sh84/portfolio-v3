@@ -194,3 +194,47 @@
   color: hsl(var(--green));
   border: 1px solid hsl(var(--green) / 0.25);
 }
+
+/* ── Blog prose base ── */
+.blog-prose {
+  color: hsl(var(--foreground));
+  line-height: 1.75;
+}
+
+/* ── Syntax highlight anchor fix ── */
+.blog-prose a[href^="#"] {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Scroll margin for heading anchors ── */
+.blog-prose h2,
+.blog-prose h3,
+.blog-prose h4 {
+  scroll-margin-top: 6rem;
+}
+
+/* ── Code block line numbers (optional) ── */
+pre code.hljs {
+  padding: 0;
+  background: transparent;
+}
+
+/* ── TOC active state animation ── */
+@keyframes tocPulse {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ── Blog card hover glow ── */
+.blog-card-glow:hover {
+  box-shadow: 0 8px 32px hsl(var(--green) / 0.08);
+}
+
+/* ── Featured post gradient border ── */
+.featured-border {
+  background:
+    linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+    linear-gradient(135deg, hsl(var(--green) / 0.4), transparent 60%) border-box;
+  border: 1px solid transparent;
+}
