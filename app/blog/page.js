@@ -39,6 +39,11 @@ export const metadata = {
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   openGraph: {
     type: "website",
     url: `${SITE_URL}/blog`,
@@ -46,14 +51,24 @@ export const metadata = {
     description:
       "Technical articles on Full Stack Development, Next.js, MERN stack, SEO, and AI by Abid Shaikh.",
     siteName: "Abid Shaikh",
+    images: [
+      {
+        url: `${SITE_URL}/og-blog-default.png`,
+        width: 1200,
+        height: 630,
+        alt: "Abid Shaikh Developer Blog",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog — Abid Shaikh",
     description: "Technical blog on Full Stack Dev, SEO, AI Integration",
     creator: "@AbidShaikh550",
+    images: [`${SITE_URL}/og-blog-default.png`],
   },
 };
+
 
 // ── Page Component ─────────────────────────────────────────────────────────
 export default async function BlogPage({ searchParams }) {

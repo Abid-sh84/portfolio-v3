@@ -5,16 +5,39 @@
  * Applies custom prose components for:
  * - Syntax highlighted code blocks (rehype-highlight applied at build)
  * - Custom blockquotes, headings, links
+ * - Rich visual components: Pipeline, StatRow, Comparison, Callout, etc.
  */
 
 "use client";
 
 import { MDXRemote } from "next-mdx-remote";
 import "highlight.js/styles/github-dark.css";
+import {
+  Pipeline,
+  StatRow,
+  Stat,
+  Comparison,
+  Callout,
+  ScoreBar,
+  RAGFlow,
+  EmbeddingViz,
+  RankingFormula,
+} from "./MDXComponents";
 
 // Custom MDX component overrides — styled to match the portfolio design
 const components = {
-  // Headings with anchor support (rehype-autolink-headings adds anchor tags inside)
+  // ── Rich visuals ────────────────────────────────────────────────────────
+  Pipeline,
+  StatRow,
+  Stat,
+  Comparison,
+  Callout,
+  ScoreBar,
+  RAGFlow,
+  EmbeddingViz,
+  RankingFormula,
+
+  // ── Headings with anchor support ────────────────────────────────────────
   h2: ({ children, id, ...props }) => (
     <h2
       id={id}
@@ -39,12 +62,12 @@ const components = {
     </h4>
   ),
 
-  // Paragraphs
+  // ── Paragraphs ──────────────────────────────────────────────────────────
   p: ({ children }) => (
     <p className="mb-4 text-[15px] leading-7 text-muted-foreground">{children}</p>
   ),
 
-  // Links — opens external links in new tab
+  // ── Links ───────────────────────────────────────────────────────────────
   a: ({ href, children, ...props }) => {
     const isExternal = href?.startsWith("http");
     return (
@@ -61,16 +84,15 @@ const components = {
     );
   },
 
-  // Blockquotes
+  // ── Blockquotes ─────────────────────────────────────────────────────────
   blockquote: ({ children }) => (
     <blockquote className="my-6 border-l-4 border-green-500 pl-5 py-1 bg-green-500/5 rounded-r-lg italic text-muted-foreground">
       {children}
     </blockquote>
   ),
 
-  // Inline code
+  // ── Inline + block code ─────────────────────────────────────────────────
   code: ({ children, className, ...props }) => {
-    // Block code — rehype-highlight adds className like "language-js"
     if (className) {
       return (
         <code className={`${className} text-sm`} {...props}>
@@ -78,7 +100,6 @@ const components = {
         </code>
       );
     }
-    // Inline code
     return (
       <code
         className="px-1.5 py-0.5 rounded text-sm font-mono bg-muted text-green-500 border border-border"
@@ -89,35 +110,31 @@ const components = {
     );
   },
 
-  // Code block wrapper — rehype-highlight handles syntax; we style the shell
   pre: ({ children }) => (
     <pre className="my-6 overflow-x-auto rounded-xl bg-[#0d1117] border border-border p-4 text-sm leading-relaxed">
       {children}
     </pre>
   ),
 
-  // Unordered list
+  // ── Lists ───────────────────────────────────────────────────────────────
   ul: ({ children }) => (
     <ul className="my-4 ml-6 space-y-2 list-disc text-muted-foreground text-[15px]">
       {children}
     </ul>
   ),
-
-  // Ordered list
   ol: ({ children }) => (
     <ol className="my-4 ml-6 space-y-2 list-decimal text-muted-foreground text-[15px]">
       {children}
     </ol>
   ),
-
   li: ({ children }) => (
     <li className="leading-relaxed">{children}</li>
   ),
 
-  // Horizontal rule
+  // ── Misc ────────────────────────────────────────────────────────────────
   hr: () => <hr className="my-8 border-border" />,
 
-  // Tables
+  // ── Tables ──────────────────────────────────────────────────────────────
   table: ({ children }) => (
     <div className="my-6 overflow-x-auto rounded-lg border border-border">
       <table className="w-full text-sm text-left">{children}</table>
@@ -133,7 +150,7 @@ const components = {
   th: ({ children }) => <th className="px-4 py-3">{children}</th>,
   td: ({ children }) => <td className="px-4 py-3 text-muted-foreground">{children}</td>,
 
-  // Strong / emphasis
+  // ── Typography ──────────────────────────────────────────────────────────
   strong: ({ children }) => (
     <strong className="font-semibold text-foreground">{children}</strong>
   ),

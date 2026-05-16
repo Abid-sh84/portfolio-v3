@@ -34,7 +34,23 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 
+// Force static generation for all blog posts.
+// Ensures Google gets fast pre-rendered HTML — critical for indexing.
+export const dynamic = "force-static";
+export const revalidate = false; // never re-render after build (use ISR if you want freshness)
+
 // ── Custom MDX components ─────────────────────────────────────────────────
+import {
+  Pipeline,
+  StatRow,
+  Stat,
+  Comparison,
+  Callout,
+  ScoreBar,
+  RAGFlow,
+  EmbeddingViz,
+  RankingFormula,
+} from "@/components/blog/MDXComponents";
 // (Inline here to avoid "use client" in this Server Component)
 const mdxComponents = {
   h2: ({ children, id }) => (
@@ -105,6 +121,17 @@ const mdxComponents = {
   td: ({ children }) => <td className="px-4 py-3 text-muted-foreground">{children}</td>,
   strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
   em: ({ children }) => <em className="italic">{children}</em>,
+
+  // ── Rich visual components ────────────────────────────────────────────
+  Pipeline,
+  StatRow,
+  Stat,
+  Comparison,
+  Callout,
+  ScoreBar,
+  RAGFlow,
+  EmbeddingViz,
+  RankingFormula,
 };
 
 // ── Static Generation ─────────────────────────────────────────────────────

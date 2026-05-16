@@ -29,12 +29,9 @@ export default function sitemap() {
 
   const blogUrls = blogs.map((blog) => ({
     url: `${SITE_URL}/blog/${blog.slug}`,
-    // Use the post's own publish date as lastModified so Google knows
-    // exactly when each article was published
-    lastModified: new Date(blog.frontmatter.date),
-    // Blog content is evergreen — monthly re-crawl is appropriate
+    // Always use today so Google re-crawls after any deployment/edit
+    lastModified: new Date(),
     changeFrequency: "monthly",
-    // Slightly below homepage/blog-listing but above sub-sections
     priority: 0.8,
   }));
 
@@ -47,56 +44,16 @@ export default function sitemap() {
       priority: 1.0,
     },
 
-    // ── Portfolio sections (single-page anchors) ──────────────────────────
-    {
-      url: `${SITE_URL}/#about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/#projects`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/#skills`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/#experience`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/#education`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-
     // ── Blog listing page ─────────────────────────────────────────────────
-    // Higher changeFrequency than posts because new articles are added here
     {
       url: `${SITE_URL}/blog`,
       lastModified: new Date(),
-      changeFrequency: "weekly",   // crawl weekly — new posts appear here
+      changeFrequency: "weekly",
       priority: 0.9,
     },
 
     // ── All blog posts — auto-generated from /content/blogs/*.mdx ─────────
-    // This spread includes every current AND future blog post automatically.
-    // Google will discover and index each new post via this sitemap entry.
     ...blogUrls,
   ];
+
 }
