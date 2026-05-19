@@ -6,57 +6,28 @@
  *  - All crawlers can access everything (homepage, blog, images, etc.)
  *  - Only internal Next.js paths and API routes are blocked
  *  - Sitemap URL is explicitly declared so Google finds it instantly
+ *
+ * NOTE: Keep this simple. Multiple per-bot allow lists create parsing
+ * ambiguity. A single "Allow: /" covers all public pages cleanly.
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://abids.tech";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.abids.tech";
 
 export default function robots() {
   return {
     rules: [
       {
-        // ── Main rule: allow all crawlers everywhere ──────────────
+        // Single rule for all bots — allows entire site except internals
         userAgent: "*",
-        allow: [
-          "/",           // homepage
-          "/blog",       // blog listing
-          "/blog/",      // all blog posts (future-proof for any slug)
-        ],
+        allow: "/",
         disallow: [
-          "/api/",       // block internal API routes
-          "/_next/",     // block Next.js internals
-          "/private/",   // block any future private routes
-        ],
-      },
-      {
-        // ── Googlebot: explicit full access + fast crawl signal ───
-        userAgent: "Googlebot",
-        allow: [
-          "/",
-          "/blog",
-          "/blog/",
-        ],
-        disallow: [
-          "/api/",
-          "/_next/",
-        ],
-      },
-      {
-        // ── Bingbot: same access ──────────────────────────────────
-        userAgent: "Bingbot",
-        allow: [
-          "/",
-          "/blog",
-          "/blog/",
-        ],
-        disallow: [
-          "/api/",
-          "/_next/",
+          "/api/",      // block internal API routes
+          "/_next/",    // block Next.js build artefacts
+          "/private/",  // block any future private routes
         ],
       },
     ],
     // Sitemap URL — Google Search Console uses this to find all pages
     sitemap: `${SITE_URL}/sitemap.xml`,
-    // Canonical host — prevents crawling of www vs non-www duplicates
-    host: SITE_URL,
   };
 }

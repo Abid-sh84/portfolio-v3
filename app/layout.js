@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://abids.tech";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.abids.tech";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),

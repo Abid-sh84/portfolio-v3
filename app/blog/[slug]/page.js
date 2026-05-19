@@ -37,7 +37,8 @@ import rehypeHighlight from "rehype-highlight";
 // Force static generation for all blog posts.
 // Ensures Google gets fast pre-rendered HTML — critical for indexing.
 export const dynamic = "force-static";
-export const revalidate = false; // never re-render after build (use ISR if you want freshness)
+// Revalidate every 24h so post edits propagate without a full redeploy.
+export const revalidate = 86400;
 
 // ── Custom MDX components ─────────────────────────────────────────────────
 import {
@@ -144,7 +145,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const blog = getBlogBySlug(slug);
-  if (!blog) return { title: "Post Not Found" };
+  // 404 pages must be noindex — never return an empty object for missing posts
+  if (!blog) {
+    return {
+      title: "Post Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
   return generateBlogMetadata(blog);
 }
 

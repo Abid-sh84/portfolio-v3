@@ -18,7 +18,7 @@
 
 import { getAllBlogs } from "@/lib/blog";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://abids.tech";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.abids.tech";
 
 export default function sitemap() {
   // ── Dynamically load all published blog posts ──────────────────────────

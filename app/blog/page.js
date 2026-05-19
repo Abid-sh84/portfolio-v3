@@ -23,6 +23,10 @@ import BlogFilter from "@/components/blog/BlogFilter";
 import { BookOpen, Rss } from "lucide-react";
 
 // ── Metadata ───────────────────────────────────────────────────────────────
+// Static metadata for the main /blog listing page.
+// NOTE: This is NOT used when filters (?category= or ?tag=) are active;
+//       those filtered pages get noindex via the Page Component below
+//       (see the <meta name="robots"> injection approach).
 export const metadata = {
   title: "Blog — Abid Shaikh | Full Stack Developer",
   description:
@@ -42,7 +46,13 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   openGraph: {
     type: "website",
@@ -76,6 +86,7 @@ export default async function BlogPage({ searchParams }) {
   const params = await searchParams;
   const activeCategory = params?.category || null;
   const activeTag = params?.tag || null;
+  const isFiltered = !!activeCategory || !!activeTag;
 
   const allBlogs = getAllBlogs();
   const featuredBlogs = getFeaturedBlogs();
@@ -94,6 +105,13 @@ export default async function BlogPage({ searchParams }) {
 
   return (
     <>
+      {/* Prevent filtered URLs (/blog?category=X or /blog?tag=Y) from being
+          indexed — they are thin duplicate views of the main /blog listing.
+          The main /blog page (no filters) is unaffected (index: true via metadata). */}
+      {isFiltered && (
+        <meta name="robots" content="noindex, follow" />
+      )}
+
       {/* JSON-LD WebSite schema */}
       <script
         type="application/ld+json"
