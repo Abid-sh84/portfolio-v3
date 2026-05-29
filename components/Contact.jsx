@@ -153,7 +153,7 @@ export default function Contact() {
                   </svg>
                   <div>
                     <p className="text-sm font-medium text-foreground">X (Twitter)</p>
-                    <p className="text-xs text-muted-foreground font-mono">@AbidShaikh550</p>
+                    <p className="text-xs text-muted-foreground font-mono">@shkabid40</p>
                   </div>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-green-500 group-hover:translate-x-1 transition-all" aria-hidden="true" />

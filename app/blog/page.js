@@ -31,15 +31,7 @@ export const metadata = {
   title: "Blog — Abid Shaikh | Full Stack Developer",
   description:
     "Technical articles on Full Stack Development, Next.js, MERN stack, SEO strategy, and AI integration by Abid Shaikh.",
-  keywords: [
-    "developer blog",
-    "Next.js tutorials",
-    "MERN stack",
-    "full stack development",
-    "technical SEO",
-    "AI integration",
-    "Abid Shaikh",
-  ],
+  // keywords intentionally omitted — Google ignores this tag
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
@@ -74,7 +66,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Blog — Abid Shaikh",
     description: "Technical blog on Full Stack Dev, SEO, AI Integration",
-    creator: "@AbidShaikh550",
+    creator: "@shkabid40",
     images: [`${SITE_URL}/og-blog-default.png`],
   },
 };

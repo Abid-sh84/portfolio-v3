@@ -226,7 +226,7 @@ export default async function BlogPostPage({ params }) {
             <aside aria-label="Article navigation">
               <TableOfContents toc={toc} />
 
-              {/* Author card */}
+              {/* Author card — E-E-A-T signals for Google quality evaluation */}
               <div className="mt-6 rounded-xl border border-border bg-card p-5 text-sm">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="h-10 w-10 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500 font-bold text-sm font-mono">
@@ -234,20 +234,30 @@ export default async function BlogPostPage({ params }) {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{frontmatter.author}</p>
-                    <p className="text-xs text-muted-foreground">Full Stack Developer</p>
+                    <p className="text-xs text-muted-foreground">Full Stack Developer · MERN Stack · AI Integration</p>
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Building production-ready web apps with MERN stack and AI integration.
+                <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+                  B.Sc. in Computer Science, Mumbai University (GPA 9.15). 2+ years building production-grade web applications with React, Node.js, and AI APIs. Creator of EduPrompt AI and QuickBite.
                 </p>
-                <a
-                  href="https://github.com/Abid-sh84"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 mt-3 text-xs text-green-500 hover:text-green-400 transition-colors"
-                >
-                  GitHub →
-                </a>
+                <div className="flex items-center gap-3">
+                  <a
+                    href="https://github.com/Abid-sh84"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-green-500 hover:text-green-400 transition-colors"
+                  >
+                    GitHub →
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/shkabid40/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-green-500 transition-colors"
+                  >
+                    LinkedIn →
+                  </a>
+                </div>
               </div>
             </aside>
           </div>

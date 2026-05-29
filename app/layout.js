@@ -21,20 +21,7 @@ export const metadata = {
   title: "Abid Shaikh — Full Stack Developer",
   description:
     "Full Stack Developer specializing in MERN stack, AI integration, and production-ready web applications. Building scalable, user-friendly products.",
-  keywords: [
-    "Abid Shaikh",
-    "Full Stack Developer",
-    "MERN Stack",
-    "React Developer",
-    "Next.js Developer",
-    "Node.js",
-    "MongoDB",
-    "AI Integration",
-    "Web Developer India",
-    "Portfolio",
-    "Thane",
-    "Mumbai University",
-  ],
+  // keywords intentionally omitted — Google ignores this tag; it's legacy bloat
   authors: [{ name: "Abid Shaikh", url: "https://github.com/Abid-sh84" }],
   creator: "Abid Shaikh",
   alternates: {
@@ -53,7 +40,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Abid Shaikh — Full Stack Developer",
     description: "Full Stack Developer | MERN Stack | AI Integration",
-    creator: "@AbidShaikh550",
+    creator: "@shkabid40",
   },
   robots: {
     index: true,
@@ -67,8 +54,7 @@ export const metadata = {
     },
   },
   verification: {
-    // Add your Google Search Console verification token here:
-    // google: "your-google-verification-token",
+    google: "CyYTp5fhSZXsYxieb5SH-4WDADdzZtSmdF8A8-Hj05k",
   },
 };
 
@@ -109,7 +95,7 @@ export default function RootLayout({ children }) {
               sameAs: [
                 "https://github.com/Abid-sh84",
                 "https://www.linkedin.com/in/shkabid40/",
-                "https://x.com/AbidShaikh550",
+                "https://x.com/shkabid40",
               ],
               knowsAbout: [
                 "JavaScript",

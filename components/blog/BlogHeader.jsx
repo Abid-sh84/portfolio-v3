@@ -12,7 +12,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, User, ChevronRight, Home } from "lucide-react";
+import { Calendar, Clock, User, ChevronRight, Home, RefreshCw } from "lucide-react";
 import { formatDate } from "@/lib/blog";
 
 export default function BlogHeader({ frontmatter, readingTime, slug }) {
@@ -75,6 +75,12 @@ export default function BlogHeader({ frontmatter, readingTime, slug }) {
           <Calendar className="h-4 w-4" />
           <time dateTime={frontmatter.date}>{formatDate(frontmatter.date)}</time>
         </span>
+        {frontmatter.lastModified && frontmatter.lastModified !== frontmatter.date && (
+          <span className="flex items-center gap-1.5 text-green-500/70" title="This article was updated after original publication">
+            <RefreshCw className="h-3.5 w-3.5" />
+            Updated <time dateTime={frontmatter.lastModified}>{formatDate(frontmatter.lastModified)}</time>
+          </span>
+        )}
         <span className="flex items-center gap-1.5">
           <Clock className="h-4 w-4" />
           {readingTime}
