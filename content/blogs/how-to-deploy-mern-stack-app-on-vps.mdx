@@ -1,0 +1,520 @@
+---
+title: "How to Deploy a MERN Stack App on VPS with Nginx, PM2 and SSL — Everything I Learned"
+description: "A real, honest deployment journey — from localhost to production. Learn how to deploy a MERN stack app on a VPS with Nginx reverse proxy, PM2 process manager, Let's Encrypt SSL, WebSockets, and Firebase push notifications. Every mistake, every fix, documented."
+date: "2026-06-16"
+lastModified: "2026-06-16"
+author: "Abid Shaikh"
+category: "DevOps & Deployment"
+tags: ["vps-deployment", "mern-stack", "nginx", "pm2", "ssl-certificate", "lets-encrypt", "websockets", "firebase-cloud-messaging", "ubuntu-server", "devops", "reverse-proxy", "deployment-guide"]
+coverImage: "/mern-vps-deployment.webp"
+featured: true
+---
+
+> **TL;DR:** Deploying a MERN stack app to a VPS is a completely separate skill from building one. This post documents every phase of deploying QuickBite — a full-stack food delivery app — on an Ubuntu VPS with Nginx, PM2, SSL, WebSockets, and Firebase push notifications. Every mistake, every confused moment, every fix — documented honestly so you don't repeat them.
+
+## Table of Contents
+
+1. [The Starting Point: Everything Works on Localhost](#the-starting-point-everything-works-on-localhost)
+2. [Phase 1: The Private Repository Problem](#phase-1-the-private-repository-problem)
+3. [Phase 2: Understanding What a Reverse Proxy Actually Does](#phase-2-understanding-what-a-reverse-proxy-actually-does)
+4. [Phase 3: Frontend Changes Not Appearing After Deployment](#phase-3-frontend-changes-not-appearing-after-deployment)
+5. [Phase 4: SSL Setup — The Biggest Milestone](#phase-4-ssl-setup--the-biggest-milestone)
+6. [Phase 5: The DNS Confusion That Made Me Feel Dumb](#phase-5-the-dns-confusion-that-made-me-feel-dumb)
+7. [Phase 6: The UFW Firewall Warning That Scared Me](#phase-6-the-ufw-firewall-warning-that-scared-me)
+8. [Phase 7: Chrome Showing "Not Secure" After SSL Was Working](#phase-7-chrome-showing-not-secure-after-ssl-was-working)
+9. [Phase 8: The IP Address SSL Error](#phase-8-the-ip-address-ssl-error)
+10. [Phase 9: Adding WebSockets — Will This Break the REST API?](#phase-9-adding-websockets--will-this-break-the-rest-api)
+11. [Phase 10: Firebase Cloud Messaging in Production](#phase-10-firebase-cloud-messaging-in-production)
+12. [Phase 11: The Nginx Disaster I Caused Myself](#phase-11-the-nginx-disaster-i-caused-myself)
+13. [Phase 12: The Nginx Default Page After Fixing SSL](#phase-12-the-nginx-default-page-after-fixing-ssl)
+14. [Phase 13: Production Build Failure — Firebase Import Error](#phase-13-production-build-failure--firebase-import-error)
+15. [The Final Architecture](#the-final-architecture)
+16. [The Five Lessons That Actually Matter](#the-five-lessons-that-actually-matter)
+17. [FAQ](#frequently-asked-questions)
+
+---
+
+## The Starting Point: Everything Works on Localhost
+
+Before I touch anything about servers, here is what my local setup looked like:
+
+```
+Frontend  →  localhost:5173  (React + Vite)
+Backend   →  localhost:5000  (Node.js + Express)
+Database  →  Local MongoDB
+```
+
+It worked perfectly. The real-time updates worked. The notifications worked. The order flow worked.
+
+The problem was simple and obvious once I said it out loud: **users cannot access localhost.**
+
+To make QuickBite accessible to anyone on the internet, I needed five things I had never set up before:
+
+- A public server with a static IP address
+- A domain name pointing to that server
+- An SSL certificate so the browser shows HTTPS instead of "Not Secure"
+- A reverse proxy to route requests to the right place
+- A process manager to keep the app running after I closed the terminal
+
+I purchased a VPS (Virtual Private Server) running **Ubuntu 24.04**, and chose **PM2**, **Nginx**, and **Git** as my deployment stack. The adventure began.
+
+---
+
+## Phase 1: The Private Repository Problem
+
+My first obstacle appeared before I even touched the server.
+
+My QuickBite repository was private on GitHub. I needed to get the code onto the VPS without making it public. My first instinct was to just make it public temporarily — but that felt wrong. API keys, environment variables, configuration details — none of that should be exposed, even briefly.
+
+The actual solution was much cleaner: **SSH keys**.
+
+I generated an SSH key directly on the VPS:
+
+```bash
+ssh-keygen -t ed25519 -C "vps-deploy-key"
+cat ~/.ssh/id_ed25519.pub
+```
+
+I copied that public key and added it to my GitHub account under **Settings → SSH and GPG keys → New SSH key**.
+
+Now my VPS had permission to clone private repositories. No passwords. No making anything public. Just a secure key handshake between my server and GitHub.
+
+> **Lesson:** You never need to make a repository public to deploy it. SSH keys are the professional way to handle this, and they take five minutes to set up.
+
+---
+
+## Phase 2: Understanding What a Reverse Proxy Actually Does
+
+Before setting up Nginx, I needed to understand what it was actually doing — because I had used the word "reverse proxy" without really knowing what it meant.
+
+Here is the mental model that finally clicked for me:
+
+```
+User's Browser
+      ↓
+   Nginx (Port 80 / 443)
+   ↙              ↘
+React App        Express API
+(frontend/dist)  (localhost:5000)
+```
+
+When someone visits `https://quickbite.abids.tech`, Nginx receives that request first. It then decides:
+
+- If the request is for a regular page → serve the React build files
+- If the request starts with `/api` → forward it to Express running on port 5000
+
+The user never talks to Express directly. They never see port 5000. Everything goes through Nginx.
+
+This matters for security — your Node.js port is never exposed to the public internet. It also matters for SSL — you only configure HTTPS in one place (Nginx), not in your Node.js app.
+
+My actual Nginx configuration for QuickBite ended up looking like this:
+
+```nginx
+server {
+    server_name quickbite.abids.tech;
+
+    # Serve React frontend
+    root /var/www/quickbite/QuickBite/frontend/dist;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    # Proxy API requests to Express
+    location /api {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+> **Lesson:** Nginx is not complicated once you have the mental model. It is a traffic director. It receives requests and decides where they go.
+
+---
+
+## Phase 3: Frontend Changes Not Appearing After Deployment
+
+This one cost me about two hours.
+
+I had deployed the app. Backend changes were reflecting immediately after a PM2 restart. But when I changed something on the frontend — updated a component, fixed a UI bug — nothing changed on the live site. I was refreshing endlessly, completely confused.
+
+The cause was simple once I understood it: **React is not a live file. It is a compiled build.**
+
+When you run `npm run build`, Vite compiles all your React code into static HTML, CSS, and JavaScript files inside a `dist` folder. Nginx serves those compiled files. If you change your source code but do not rebuild, Nginx keeps serving the old compiled files.
+
+The fix:
+
+```bash
+cd /var/www/quickbite/QuickBite/frontend
+npm run build
+sudo systemctl reload nginx
+```
+
+> **Lesson:** Restarting the backend does not rebuild the frontend. These are completely separate processes. Any frontend change requires a fresh build.
+
+---
+
+## Phase 4: SSL Setup — The Biggest Milestone
+
+Getting HTTPS working felt like the moment QuickBite became a real product.
+
+I used **Certbot with Let's Encrypt** — a free, automated SSL certificate service trusted by browsers everywhere. The command was surprisingly simple:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d quickbite.abids.tech
+```
+
+Certbot automatically detected my Nginx configuration, generated the certificate, and modified the config to use HTTPS. It also set up automatic renewal — so the certificate never expires without action from me.
+
+After running this, `https://quickbite.abids.tech` showed a valid, trusted SSL certificate. The browser showed the padlock. No warnings.
+
+> **Lesson:** Free SSL is production-grade SSL. Let's Encrypt certificates are trusted by every major browser. There is no reason to pay for a basic SSL certificate.
+
+---
+
+## Phase 5: The DNS Confusion That Made Me Feel Dumb
+
+At some point I was debugging a DNS issue and ran this command:
+
+```bash
+nslookup http://quickbite.abids.tech
+```
+
+The output said: `Non-existent domain`.
+
+I panicked. I thought DNS was broken, the domain was not configured, something had gone catastrophically wrong. I spent fifteen minutes rechecking my DNS settings.
+
+Then I realized the issue.
+
+`nslookup` takes a **hostname**, not a URL. The `http://` prefix is part of a URL — it is not part of a domain name. I had passed a URL to a tool that expects a hostname.
+
+The correct command:
+
+```bash
+nslookup quickbite.abids.tech
+```
+
+That returned the correct IP address immediately. Nothing was broken. I had just included the protocol where it did not belong.
+
+> **Lesson:** `nslookup` takes a hostname, not a URL. Never include `http://` or `https://` when working with DNS tools or server configuration.
+
+---
+
+## Phase 6: The UFW Firewall Warning That Scared Me
+
+Setting up the firewall gave me a genuine moment of panic.
+
+When I ran `sudo ufw enable`, the terminal printed a warning:
+
+```
+Command may disrupt existing ssh connections. Proceed with operation (y|n)?
+```
+
+I stared at that for a while. If I enabled the firewall and it blocked SSH, I would be locked out of my own server permanently — with no way back in except a full server reset.
+
+The correct sequence — which I learned by reading carefully before pressing anything — is to allow SSH *before* enabling the firewall:
+
+```bash
+sudo ufw allow OpenSSH
+sudo ufw allow 'Nginx Full'
+sudo ufw enable
+```
+
+`Nginx Full` allows both port 80 (HTTP) and port 443 (HTTPS). OpenSSH allows port 22 so you keep terminal access. Only after both rules are added should you enable the firewall.
+
+> **Lesson:** Always allow SSH before enabling UFW. If you lock yourself out of a VPS, recovery requires a complete server rebuild. The warning is real. Read it.
+
+---
+
+## Phase 7: Chrome Showing "Not Secure" After SSL Was Working
+
+This is the one that genuinely confused me the most — because the problem existed in exactly one browser.
+
+- Firefox: site loaded correctly with HTTPS
+- Edge: site loaded correctly with HTTPS  
+- Chrome: "Not Secure" warning, red padlock
+
+I spent a long time wondering if Chrome had stricter SSL requirements. I checked the certificate. I reran Certbot. I read forum posts about HSTS and mixed content. Everything looked correct.
+
+The actual cause: **Chrome cache**.
+
+Chrome had cached an older HTTP version of the site and was serving that cached version instead of making a fresh request. The fix took thirty seconds:
+
+Open Chrome Incognito window → visit the site → loads correctly with HTTPS.
+
+After clearing Chrome's cache and cookies for the domain, the regular window worked too.
+
+> **Lesson:** Before debugging production infrastructure, test in an incognito window. Browser cache can make a working deployment look broken. This probably saved me hours on future issues too.
+
+---
+
+## Phase 8: The IP Address SSL Error
+
+At one point during testing, I tried accessing the server directly by its IP address:
+
+```
+https://143.110.xxx.xxx
+```
+
+Chrome showed `ERR_CERT_COMMON_NAME_INVALID`.
+
+This confused me until I understood how SSL certificates actually work.
+
+An SSL certificate is issued for a **specific domain name** — in my case, `quickbite.abids.tech`. It cryptographically proves that this domain is served by a legitimate certificate. It says nothing about IP addresses.
+
+When you access a server by IP instead of domain, the browser checks: does this certificate match what I am connecting to? The certificate says `quickbite.abids.tech`. The address bar shows an IP number. They do not match. Hence the error.
+
+This is not a bug. This is SSL working correctly.
+
+> **Lesson:** SSL certificates are issued for domain names, not server IPs. Always access your production site through its domain, not its IP address — especially when testing SSL.
+
+---
+
+## Phase 9: Adding WebSockets — Will This Break the REST API?
+
+QuickBite needed real-time features: live order status updates for customers, instant notifications for sellers when new orders arrived.
+
+I added **Socket.IO** on the backend. My immediate concern was whether adding WebSocket support would interfere with the existing REST API endpoints.
+
+The answer is no — and understanding why is worth a moment.
+
+REST and WebSockets use different communication models:
+
+```
+REST API    →  Request / Response  →  CRUD operations
+WebSocket   →  Persistent connection  →  Real-time events
+```
+
+They coexist perfectly on the same Express server. Socket.IO attaches to your HTTP server instance, not your Express routes. Your existing API endpoints are completely unaffected.
+
+The Nginx configuration needed one addition — the `Upgrade` header — to support WebSocket connections:
+
+```nginx
+location /socket.io {
+    proxy_pass http://localhost:5000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+```
+
+> **Lesson:** WebSockets and REST APIs are not competitors. They solve different problems and run alongside each other without conflict.
+
+---
+
+## Phase 10: Firebase Cloud Messaging in Production
+
+Push notifications added another layer of complexity.
+
+I integrated **Firebase Cloud Messaging (FCM)** to send browser push notifications to sellers when new orders arrived and to customers when their order status changed. The implementation required:
+
+- A Firebase Web App configuration
+- A VAPID key for web push
+- A Service Account Key for server-side sends
+- A `firebase-messaging-sw.js` service worker file in the public directory
+- Storing `fcmTokens` arrays on both User and Seller documents in MongoDB
+
+The service worker piece was the most important thing to get right. It must be served from the root of your domain — `quickbite.abids.tech/firebase-messaging-sw.js` — so the browser can register it. Placing it anywhere else breaks the notification flow silently.
+
+> **Lesson:** FCM and Socket.IO solve different problems. Socket.IO requires an active browser tab. FCM delivers notifications even when the browser is closed. Production apps with real-time features often need both.
+
+---
+
+## Phase 11: The Nginx Disaster I Caused Myself
+
+The most stressful hour of this entire deployment.
+
+I made what I thought was a small edit to the Nginx configuration file — adjusting a path. After saving, I ran `sudo nginx -t` to test the configuration:
+
+```
+nginx: [emerg] no ssl_certificate is defined for
+the "listen ... ssl" directive
+```
+
+I tried fixing it. Then:
+
+```
+nginx: [emerg] duplicate listen options for 0.0.0.0:443
+```
+
+Then:
+
+```
+nginx: configuration file test failed
+```
+
+QuickBite was down. Every attempt to fix it made something else break.
+
+The root cause: I had accidentally deleted the SSL configuration lines that Certbot had automatically added. The lines that define `ssl_certificate` and `ssl_certificate_key` are added by Certbot and they must stay exactly as written. I had removed them thinking they were part of something I was editing.
+
+The fix required re-adding:
+
+```nginx
+ssl_certificate /etc/letsencrypt/live/quickbite.abids.tech/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/quickbite.abids.tech/privkey.pem;
+include /etc/letsencrypt/options-ssl-nginx.conf;
+ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+```
+
+And removing the duplicate `listen 443` directive that had appeared when I confused Nginx by partially editing the file.
+
+> **Lesson:** Treat the Nginx config lines added by Certbot as read-only. Understand what each line does before editing anything. Always run `sudo nginx -t` before reloading. Always have a backup of a working config.
+
+---
+
+## Phase 12: The Nginx Default Page After Fixing SSL
+
+After fixing the SSL disaster, I reloaded Nginx with relief — and the site loaded the Nginx default welcome page instead of QuickBite.
+
+```
+Welcome to nginx!
+If you see this page, the nginx web server is successfully installed...
+```
+
+The cause was that in my editing chaos, I had lost the `root` directive — the line that tells Nginx where the React build files actually are.
+
+Without a `root` directive, Nginx falls back to its default page location. Adding it back fixed everything:
+
+```nginx
+root /var/www/quickbite/QuickBite/frontend/dist;
+index index.html;
+```
+
+> **Lesson:** The `root` directive is what connects Nginx to your actual application. Without it, Nginx does not know where your files are and serves its default page instead.
+
+---
+
+## Phase 13: Production Build Failure — Firebase Import Error
+
+The final obstacle before a stable deployment.
+
+Running `npm run build` on the server produced:
+
+```
+[vite]: Rollup failed to resolve import "firebase/messaging"
+```
+
+The development environment had been working fine. Production build failed.
+
+The cause was a mismatch between what was installed and what the build process expected. The fix:
+
+```bash
+npm install firebase
+npm run build
+```
+
+This reinstalled the Firebase dependency cleanly and the build completed successfully.
+
+> **Lesson:** A working development environment does not guarantee a working production build. Always run the production build command locally before deploying to catch dependency issues early.
+
+---
+
+## The Final Architecture
+
+After all fourteen phases, this is what QuickBite's production architecture looks like:
+
+```
+User's Browser (HTTPS)
+        ↓
+    Nginx (Port 443)
+    ↙            ↘
+React/Vite      Express API
+(static files)  (localhost:5000 via proxy)
+                    ↓
+                 MongoDB
+                    
+Real-time layer:
+Socket.IO  →  Live order updates, seller notifications
+
+Push Notifications:
+Firebase Cloud Messaging  →  Background notifications
+```
+
+PM2 keeps the Node.js process alive across server reboots, crashes, and terminal sessions. Nginx handles all inbound traffic, SSL termination, and routing. The frontend is served as static files — no Node.js involved in serving HTML, CSS, or JavaScript.
+
+---
+
+## The Five Lessons That Actually Matter
+
+**1. Deployment is a completely separate skill from development.**  
+Building the application and running it on a production server require different knowledge. Local development hides complexity that production ruthlessly exposes. Plan time for it.
+
+**2. Browser cache will waste your time if you let it.**  
+Test in incognito. Always. Before debugging infrastructure, rule out cache. I learned this after the Chrome SSL issue and it has saved me time on every deployment since.
+
+**3. SSL belongs to domain names, not IP addresses.**  
+This is fundamental to how HTTPS works. Your certificate is a proof of identity for a specific hostname. Access your production app through its domain, always.
+
+**4. Nginx is powerful and unforgiving.**  
+One wrong line, one missing directive, one duplicate listener — and your site is down. Keep a backup of every working configuration. Test before reloading. Read what Certbot wrote before editing around it.
+
+**5. Real-time is two different problems.**  
+WebSocket connections (Socket.IO) and push notifications (FCM) solve different problems. Socket.IO requires an active browser session. FCM works when the browser is closed. Production applications with live features often need both, and they are not interchangeable.
+
+---
+
+## Wrapping Up
+
+QuickBite is live at [quickbite.abids.tech](https://quickbite.abids.tech).
+
+Getting it there took longer than building it. Every phase of this deployment — the private repository setup, the reverse proxy confusion, the SSL panic, the browser cache mystery, the Nginx disaster — was a lesson I could not have learned from a tutorial, because tutorials show you the happy path.
+
+Production is not the happy path. It is fourteen unexpected problems and the solutions you build when there is no other choice.
+
+If you are a developer sitting on a completed project that only runs on localhost — start the deployment process. You will break things. You will fix them. And you will come out understanding more about how the internet actually works than any course could teach you.
+
+---
+
+*If you found this useful, explore [Technical SEO for Developers](/blog/technical-seo-for-developers) or connect with me on [GitHub](https://github.com/Abid-sh84).*
+
+---
+
+## Frequently Asked Questions
+
+### What is a VPS and why should I use one instead of shared hosting for a MERN stack app?
+
+A VPS (Virtual Private Server) gives you a dedicated virtual machine with root access, your own IP address, and full control over the operating system. Unlike shared hosting, a VPS lets you install Node.js, run PM2 as a process manager, configure Nginx as a reverse proxy, and manage WebSocket connections — all of which are essential for a production MERN stack application. Shared hosting typically only supports PHP-based applications and does not give you the control needed for a Node.js backend.
+
+### How does Nginx work as a reverse proxy for a Node.js application?
+
+Nginx sits between the user's browser and your Node.js server. When a request arrives at port 80 (HTTP) or 443 (HTTPS), Nginx receives it first and decides where to route it — static frontend files are served directly by Nginx, while API requests starting with `/api` are forwarded (proxied) to your Express server running on localhost:5000. The user never communicates with Node.js directly, which improves security and allows SSL to be configured in one place.
+
+### How do I get a free SSL certificate for my VPS-hosted website?
+
+Use Certbot with Let's Encrypt. Install it with `sudo apt install certbot python3-certbot-nginx -y`, then run `sudo certbot --nginx -d yourdomain.com`. Certbot automatically detects your Nginx configuration, generates a trusted SSL certificate, modifies your Nginx config to use HTTPS, and sets up automatic renewal. Let's Encrypt certificates are trusted by all major browsers and are completely free — there is no reason to pay for a basic SSL certificate.
+
+### Why does Chrome show "Not Secure" even after SSL is correctly configured?
+
+This is almost always caused by browser cache. Chrome may have cached an older HTTP version of your site and continues serving that cached version even after SSL is properly set up. The quickest way to verify is to open an Incognito window and visit your site — if it loads correctly with HTTPS, the issue is cache. Clear Chrome's cache and cookies for the domain, and the regular window will work correctly too.
+
+### Can WebSockets (Socket.IO) and REST API run on the same Express server?
+
+Yes, they coexist without any conflict. REST uses a request/response model for CRUD operations, while WebSockets maintain a persistent connection for real-time events. Socket.IO attaches to your HTTP server instance, not to Express routes, so your existing API endpoints are completely unaffected. You just need to add a `/socket.io` location block in your Nginx configuration with the `Upgrade` and `Connection` headers to support the WebSocket protocol.
+
+### What is the difference between Socket.IO and Firebase Cloud Messaging (FCM)?
+
+Socket.IO provides real-time bidirectional communication but requires an active browser tab — when the user closes the tab, the connection is lost. Firebase Cloud Messaging (FCM) delivers push notifications even when the browser is completely closed, using a service worker that runs in the background. Production applications with real-time features typically need both — Socket.IO for live in-app updates and FCM for notifications when the user is away.
+
+### How do I deploy a private GitHub repository to a VPS without making it public?
+
+Generate an SSH key on your VPS using `ssh-keygen -t ed25519 -C "vps-deploy-key"`, then copy the public key and add it to your GitHub account under Settings → SSH and GPG keys. This creates a secure key handshake between your server and GitHub, allowing you to clone private repositories over SSH without passwords or exposing your code publicly. It takes about five minutes to set up.
+
+### What happens if I enable UFW firewall without allowing SSH first?
+
+You will be permanently locked out of your VPS. UFW (Uncomplicated Firewall) blocks all incoming connections by default when enabled. If SSH (port 22) is not explicitly allowed before enabling UFW, you lose terminal access to your server with no way to reconnect — the only recovery option is a complete server rebuild from your hosting provider's console. Always run `sudo ufw allow OpenSSH` before `sudo ufw enable`.
+
+### Why does accessing my server by IP address show ERR_CERT_COMMON_NAME_INVALID?
+
+SSL certificates are issued for specific domain names, not IP addresses. When you access your server by IP over HTTPS, the browser checks if the certificate matches the address in the URL bar. The certificate says `yourdomain.com` but the address bar shows an IP — they do not match, triggering the error. This is not a bug; it is SSL working correctly. Always access your production site through its domain name.
+
+### What is the most important lesson about deploying a MERN stack app to production?
+
+Deployment is a completely separate skill from development. Building a working application on localhost and running it reliably on a production server require fundamentally different knowledge — networking, DNS, SSL, reverse proxies, process management, firewall configuration, and caching. Local development hides all this complexity. Plan dedicated time for deployment, expect unexpected problems, and document everything as you go. The experience will teach you more about how the internet works than any tutorial can.
+
+---

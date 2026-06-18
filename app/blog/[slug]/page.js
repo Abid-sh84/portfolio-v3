@@ -22,6 +22,7 @@ import {
   generateBlogMetadata,
   generateBlogPostingSchema,
   generateBreadcrumbSchema,
+  generateFAQSchema,
 } from "@/lib/seo";
 import BlogHeader from "@/components/blog/BlogHeader";
 import TableOfContents from "@/components/blog/TableOfContents";
@@ -170,6 +171,7 @@ export default async function BlogPostPage({ params }) {
   // JSON-LD schemas
   const blogPostingSchema = generateBlogPostingSchema(blog);
   const breadcrumbSchema = generateBreadcrumbSchema(slug, frontmatter.title);
+  const faqSchema = generateFAQSchema(content);
 
   return (
     <>
@@ -182,6 +184,12 @@ export default async function BlogPostPage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {/* Syntax highlight styles */}
       {/* eslint-disable-next-line @next/next/no-css-tags */}
