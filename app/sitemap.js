@@ -29,8 +29,10 @@ export default function sitemap() {
 
   const blogUrls = blogs.map((blog) => ({
     url: `${SITE_URL}/blog/${blog.slug}`,
-    // Always use today so Google re-crawls after any deployment/edit
-    lastModified: new Date(),
+    // Use the actual lastModified (or published) date from frontmatter.
+    // Using new Date() for every post regardless of changes is a sitemap
+    // manipulation signal and may be ignored or penalised by Google.
+    lastModified: new Date(blog.frontmatter.lastModified || blog.frontmatter.date),
     changeFrequency: "monthly",
     priority: 0.8,
   }));

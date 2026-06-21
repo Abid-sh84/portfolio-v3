@@ -32,7 +32,11 @@ import BlogNavigation from "@/components/blog/BlogNavigation";
 // MDX options with rehype/remark plugins configured in next.config.mjs
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// rehypeAutolinkHeadings intentionally removed — it was appending a "#" anchor
+// link to every heading, creating a 3rd duplicate for every TOC entry (on top
+// of the inline TOC list and the sticky sidebar TOC). That inflated the page to
+// 120+ self-referential fragment links, which Google's quality algorithms flag
+// as a low-quality signal → "Crawled – currently not indexed".
 import rehypeHighlight from "rehype-highlight";
 
 // Force static generation for all blog posts.
@@ -218,19 +222,10 @@ export default async function BlogPostPage({ params }) {
                   mdxOptions: {
                     remarkPlugins: [remarkGfm],
                     rehypePlugins: [
+                      // rehype-slug: adds id="" attributes to headings so TOC links work
                       rehypeSlug,
-                      [rehypeAutolinkHeadings, {
-                        behavior: "append",
-                        properties: {
-                          className: ["heading-anchor"],
-                          ariaHidden: true,
-                          tabIndex: -1,
-                        },
-                        content: {
-                          type: "text",
-                          value: " #",
-                        },
-                      }],
+                      // rehypeAutolinkHeadings removed — was causing 3x duplicate links
+                      // per heading → Google flagged page as "Crawled – not indexed"
                       rehypeHighlight,
                     ],
                   },
