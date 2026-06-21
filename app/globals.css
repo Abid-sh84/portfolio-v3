@@ -214,6 +214,20 @@
   scroll-margin-top: 6rem;
 }
 
+/* ── Heading anchor link (appended #) ── */
+.heading-anchor {
+  opacity: 0;
+  color: hsl(var(--green));
+  text-decoration: none;
+  font-weight: 400;
+  margin-left: 0.25rem;
+  transition: opacity 0.15s;
+}
+h2:hover .heading-anchor,
+h3:hover .heading-anchor {
+  opacity: 0.5;
+}
+
 /* ── Code block line numbers (optional) ── */
 pre code.hljs {
   padding: 0;

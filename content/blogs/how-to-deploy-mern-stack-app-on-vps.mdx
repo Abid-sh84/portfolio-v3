@@ -2,7 +2,7 @@
 title: "How to Deploy a MERN Stack App on VPS with Nginx, PM2 and SSL — Everything I Learned"
 description: "A real, honest deployment journey — from localhost to production. Learn how to deploy a MERN stack app on a VPS with Nginx reverse proxy, PM2 process manager, Let's Encrypt SSL, WebSockets, and Firebase push notifications. Every mistake, every fix, documented."
 date: "2026-06-16"
-lastModified: "2026-06-16"
+lastModified: "2026-06-21"
 author: "Abid Shaikh"
 category: "DevOps & Deployment"
 tags: ["vps-deployment", "mern-stack", "nginx", "pm2", "ssl-certificate", "lets-encrypt", "websockets", "firebase-cloud-messaging", "ubuntu-server", "devops", "reverse-proxy", "deployment-guide"]
@@ -11,26 +11,6 @@ featured: true
 ---
 
 > **TL;DR:** Deploying a MERN stack app to a VPS is a completely separate skill from building one. This post documents every phase of deploying QuickBite — a full-stack food delivery app — on an Ubuntu VPS with Nginx, PM2, SSL, WebSockets, and Firebase push notifications. Every mistake, every confused moment, every fix — documented honestly so you don't repeat them.
-
-## Table of Contents
-
-1. [The Starting Point: Everything Works on Localhost](#the-starting-point-everything-works-on-localhost)
-2. [Phase 1: The Private Repository Problem](#phase-1-the-private-repository-problem)
-3. [Phase 2: Understanding What a Reverse Proxy Actually Does](#phase-2-understanding-what-a-reverse-proxy-actually-does)
-4. [Phase 3: Frontend Changes Not Appearing After Deployment](#phase-3-frontend-changes-not-appearing-after-deployment)
-5. [Phase 4: SSL Setup — The Biggest Milestone](#phase-4-ssl-setup--the-biggest-milestone)
-6. [Phase 5: The DNS Confusion That Made Me Feel Dumb](#phase-5-the-dns-confusion-that-made-me-feel-dumb)
-7. [Phase 6: The UFW Firewall Warning That Scared Me](#phase-6-the-ufw-firewall-warning-that-scared-me)
-8. [Phase 7: Chrome Showing "Not Secure" After SSL Was Working](#phase-7-chrome-showing-not-secure-after-ssl-was-working)
-9. [Phase 8: The IP Address SSL Error](#phase-8-the-ip-address-ssl-error)
-10. [Phase 9: Adding WebSockets — Will This Break the REST API?](#phase-9-adding-websockets--will-this-break-the-rest-api)
-11. [Phase 10: Firebase Cloud Messaging in Production](#phase-10-firebase-cloud-messaging-in-production)
-12. [Phase 11: The Nginx Disaster I Caused Myself](#phase-11-the-nginx-disaster-i-caused-myself)
-13. [Phase 12: The Nginx Default Page After Fixing SSL](#phase-12-the-nginx-default-page-after-fixing-ssl)
-14. [Phase 13: Production Build Failure — Firebase Import Error](#phase-13-production-build-failure--firebase-import-error)
-15. [The Final Architecture](#the-final-architecture)
-16. [The Five Lessons That Actually Matter](#the-five-lessons-that-actually-matter)
-17. [FAQ](#frequently-asked-questions)
 
 ---
 

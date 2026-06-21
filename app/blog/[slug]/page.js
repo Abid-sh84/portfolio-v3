@@ -219,7 +219,18 @@ export default async function BlogPostPage({ params }) {
                     remarkPlugins: [remarkGfm],
                     rehypePlugins: [
                       rehypeSlug,
-                      [rehypeAutolinkHeadings, { behavior: "wrap" }],
+                      [rehypeAutolinkHeadings, {
+                        behavior: "append",
+                        properties: {
+                          className: ["heading-anchor"],
+                          ariaHidden: true,
+                          tabIndex: -1,
+                        },
+                        content: {
+                          type: "text",
+                          value: " #",
+                        },
+                      }],
                       rehypeHighlight,
                     ],
                   },
