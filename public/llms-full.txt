@@ -1,0 +1,157 @@
+# Abid Shaikh — Full Stack Developer (Full Content)
+
+> Personal portfolio and technical blog of Abid Shaikh, a Full Stack Developer based in Thane, India, specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js), AI integration, and production-ready web applications. This is the comprehensive version with full content from all sections of the portfolio.
+
+---
+
+## About
+
+I'm Abid Shaikh, a Full Stack Developer based in Thane, India, with a strong passion for building production-ready web applications that solve real problems.
+
+My primary stack is the MERN stack (MongoDB, Express.js, React.js, Node.js), and I'm experienced in integrating AI capabilities into web applications using tools like Gemini AI and Claude (Anthropic). I recently migrated my portfolio to Next.js for better performance and SEO.
+
+I've built and deployed full-stack products including QuickBite (a food ordering platform with real-time order tracking) and EduPrompt AI (an AI-powered study platform with live viva exams).
+
+Outside of coding, I'm constantly learning — whether that's exploring new technologies, contributing to open-source, or improving my problem-solving skills. I'm currently open to full-time opportunities where I can contribute, grow, and build impactful software.
+
+### Quick Facts
+
+- Education: BSc Computer Science, Mumbai University — Graduated with 9.15 GPA
+- Experience: Backend Developer Intern at Zidio Development
+- Focus: MERN stack, REST APIs, real-time communication, AI integration
+- Contact: muhammadabid9326@gmail.com
+- Location: Thane, India (IST, UTC+5:30)
+- Status: Available — Open to full-time roles & freelance projects
+
+---
+
+## Skills
+
+### Languages
+JavaScript, Python
+
+### Frameworks & Technologies
+React.js, Next.js, Node.js, Express.js
+
+### Databases
+MongoDB, MySQL, PostgreSQL
+
+### APIs & Communication
+REST APIs, WebSockets, Firebase Cloud Messaging (FCM)
+
+### AI & Tools
+Gemini AI, Claude (Anthropic), Prompt Engineering, VS Code, Postman, Git, GitHub, Vercel, Render, Railway
+
+---
+
+## Featured Projects
+
+### QuickBite — Food Ordering + Seller Dashboard
+- Status: In Development
+- Stack: MERN + Socket.IO + Razorpay
+- Live: https://quickbite.abids.tech/
+- Description: A full-stack food ordering platform with multi-step seller onboarding, real-time order notifications, and a comprehensive admin dashboard. Built to handle complex business workflows with scalable architecture.
+- Key Features:
+  - Multi-step seller onboarding (registration, email OTP, restaurant/owner/docs) with admin approval flow, backed by Seller/SellerSettings models
+  - Online ordering with full order state machine, menu CRUD with image upload, Razorpay one-time payments
+  - Real-time order notifications via Socket.IO + FCM
+  - React dashboard with revenue/order charts, recent orders, and menu/order management
+- Technologies: React.js, Node.js, Express.js, MongoDB, Socket.IO, Razorpay, FCM
+
+### EduPrompt AI — AI Learning & Assessment Platform
+- Status: Deployed
+- Stack: MERN + Clerk + Vite
+- Live: https://edprompt.vercel.app/
+- Description: An AI-powered study platform that ingests PDFs, generates contextual questions, and conducts live viva exams with eye/lip attention tracking. Integrates Gemini AI and Pinecone vector search for intelligent tutoring.
+- Key Features:
+  - AI-driven study workspace ingesting PDFs, generating contextual questions with Gemini + Pinecone vector search
+  - Live viva exams with eye/lip attention tracking, scoring dashboards, automated performance reports
+  - Secure auth via Clerk, subscription/payments, responsive React UI
+  - Deployed backend/frontend on Vercel with production-ready configs
+- Technologies: React.js, Node.js, Express.js, MongoDB, Clerk, Gemini AI, Pinecone, Vite
+
+---
+
+## Work Experience
+
+### Backend Developer Intern — Zidio Development
+- Duration: Mar 2025 – Apr 2025
+- Type: Internship
+- Description: Contributed to backend development of a production web application. Built and tested RESTful APIs, implemented user authentication flows, and collaborated with the frontend team to integrate APIs seamlessly.
+- Key Responsibilities:
+  - Developed RESTful APIs using Node.js and Express
+  - Implemented authentication and core backend features
+  - Worked with MongoDB for database operations
+  - Collaborated with frontend team using Git & GitHub
+- Technologies: Node.js, Express.js, MongoDB, REST APIs, Git
+
+---
+
+## Education
+
+### Bachelor of Science in Computer Science — Mumbai University
+- Duration: Jun 2023 – Apr 2026
+- GPA: 9.15 / 10
+- Status: Graduated
+- Description: Completed BSc in Computer Science with a focus on software development, data structures, and algorithms. Graduated with a strong GPA of 9.15, consistently maintaining top academic performance while building real-world development projects.
+- Relevant Coursework: Object Oriented Programming, Data Structures & Algorithms, Databases, Discrete Mathematics, Operating Systems, Computer Networks
+
+---
+
+## Blog Posts
+
+### How to Deploy a MERN Stack App on VPS with Nginx, PM2 and SSL — Everything I Learned
+- URL: https://www.abids.tech/blog/how-to-deploy-mern-stack-app-on-vps
+- Published: June 16, 2026 | Last Modified: June 21, 2026
+- Category: DevOps & Deployment
+- Tags: vps-deployment, mern-stack, nginx, pm2, ssl-certificate, lets-encrypt, websockets, firebase-cloud-messaging, ubuntu-server, devops, reverse-proxy, deployment-guide
+
+A real, honest deployment journey — from localhost to production. Covers every phase of deploying QuickBite (a full-stack food delivery app) on an Ubuntu VPS with Nginx reverse proxy, PM2 process manager, Let's Encrypt SSL, WebSocket (Socket.IO) configuration, and Firebase Cloud Messaging push notifications. Documents 13 phases including: private repo SSH key setup, understanding reverse proxies, frontend build process, SSL with Certbot, DNS debugging, UFW firewall configuration, browser cache issues, WebSocket/REST coexistence, FCM service workers, Nginx configuration management, and production build debugging. Includes five key lessons about deployment as a separate skill from development.
+
+### Is Vibe Coding the Future of Software Development? A Developer's Perspective
+- URL: https://www.abids.tech/blog/is-vibe-coding-the-future-of-software-development
+- Published: May 30, 2026 | Last Modified: May 30, 2026
+- Category: AI & Development
+- Tags: vibe-coding, ai-coding-tools, future-of-software-development, ai-programming, developer-productivity, github-copilot, cursor-ai, chatgpt, software-engineering
+
+Exploration of Vibe Coding — the practice of using AI to generate code from natural language descriptions. Coined by Andrej Karpathy in early 2025. Covers tools (ChatGPT, Claude, GitHub Copilot, Cursor AI), benefits (55% faster task completion per GitHub's research), hidden risks (security vulnerabilities, debugging difficulty, over-reliance, code quality), impact by developer level (junior, mid, senior), what AI still can't do (product thinking, business context, system design, stakeholder communication), and predictions through 2030. Concludes that AI is reshaping software engineering rather than replacing engineers.
+
+### AI Indexing Explained: How Search Engines Index Your Content in 2026
+- URL: https://www.abids.tech/blog/ai-indexing-explained
+- Published: May 13, 2026 | Last Modified: May 29, 2026
+- Category: AI & Search
+- Tags: ai-indexing, vector-search, semantic-search, machine-learning, search-engines, embeddings
+
+Deep dive into modern AI-powered indexing systems. Explains the paradigm shift from BM25 keyword matching to semantic understanding via transformer models. Covers vector embeddings (384–1024 dimensional), the full indexing pipeline (discovery, preprocessing, semantic encoding, storage), HNSW/IVF data structures for O(log n) nearest-neighbor search, query-time cosine similarity ranking, Retrieval Augmented Generation (RAG), real-world performance numbers (200ms latency, 8.5B indexed pages), content optimization strategies for 2026, and a practical semantic search implementation using Ollama and LangChain.
+
+### Technical SEO for Developers: A Complete Guide
+- URL: https://www.abids.tech/blog/technical-seo-for-developers
+- Published: May 6, 2026 | Last Modified: May 29, 2026
+- Category: SEO
+- Tags: technical-seo, nextjs, web-performance, structured-data, google
+
+Comprehensive guide to Technical SEO from a developer's perspective. Covers the Crawl → Index → Rank pipeline, robots.txt configuration, dynamic sitemap.xml generation, canonical URLs, Next.js generateMetadata for per-page metadata, JSON-LD structured data (Person, BlogPosting, BreadcrumbList schemas), Core Web Vitals (LCP, INP, CLS) with code fixes, Open Graph social sharing optimization, static generation for SEO performance, URL structure best practices, keyword strategy for developer blogs, and the full SEO tech stack used on abids.tech.
+
+---
+
+## Connect
+
+- Website: https://www.abids.tech
+- GitHub: https://github.com/Abid-sh84
+- LinkedIn: https://www.linkedin.com/in/shkabid40/
+- X (Twitter): https://x.com/shkabid40
+- Email: muhammadabid9326@gmail.com
+
+---
+
+## Technical Details
+
+- Framework: Next.js 15 (App Router)
+- Styling: Tailwind CSS
+- Content: MDX with gray-matter frontmatter
+- Fonts: Inter, JetBrains Mono, Press Start 2P
+- Theme: Dark mode default with theme provider
+- Hosting: Vercel
+- Domain: www.abids.tech
+- SEO: Dynamic sitemap, robots.txt, JSON-LD (Person schema), per-page metadata, Open Graph tags, Core Web Vitals optimized
+- Canonical: www.abids.tech (non-www redirects to www via 308)

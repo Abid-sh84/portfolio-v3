@@ -1,0 +1,45 @@
+# Abid Shaikh — Full Stack Developer
+
+> Personal portfolio and technical blog of Abid Shaikh, a Full Stack Developer based in Thane, India, specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js), AI integration, and production-ready web applications.
+
+## About
+
+Abid Shaikh is a Full Stack Developer with strong expertise in the MERN stack and hands-on experience building and deploying production-ready web applications. He is passionate about integrating AI into web solutions and creating scalable, user-friendly products. Skilled in REST APIs, real-time communication (WebSockets, Socket.IO), and modern deployment platforms (Vercel, Render, Railway).
+
+- Location: Thane, India (IST, UTC+5:30)
+- Education: BSc Computer Science, Mumbai University — 9.15 / 10 GPA (Graduated 2026)
+- Experience: Backend Developer Intern at Zidio Development (Mar–Apr 2025)
+- Status: Open to full-time opportunities and freelance projects
+- Email: muhammadabid9326@gmail.com
+
+## Skills
+
+- Languages: JavaScript, Python
+- Frameworks: React.js, Next.js, Node.js, Express.js
+- Databases: MongoDB, MySQL, PostgreSQL
+- APIs & Communication: REST APIs, WebSockets, Firebase Cloud Messaging (FCM)
+- AI & Tools: Gemini AI, Claude (Anthropic), Prompt Engineering, Git, GitHub, Vercel, Render, Railway, VS Code, Postman
+
+## Featured Projects
+
+- [QuickBite](https://quickbite.abids.tech/): Full-stack food ordering platform with multi-step seller onboarding, real-time order notifications via Socket.IO + FCM, Razorpay payments, and a React dashboard with revenue/order charts. Stack: React.js, Node.js, Express.js, MongoDB, Socket.IO, Razorpay, FCM.
+- [EduPrompt AI](https://edprompt.vercel.app/): AI-powered study platform that ingests PDFs, generates contextual questions using Gemini AI + Pinecone vector search, and conducts live viva exams with eye/lip attention tracking. Stack: React.js, Node.js, Express.js, MongoDB, Clerk, Gemini AI, Pinecone, Vite.
+
+## Blog Posts
+
+- [How to Deploy a MERN Stack App on VPS with Nginx, PM2 and SSL](https://www.abids.tech/blog/how-to-deploy-mern-stack-app-on-vps): A real deployment journey documenting every phase of deploying a MERN app on an Ubuntu VPS with Nginx reverse proxy, PM2, Let's Encrypt SSL, WebSockets, and Firebase push notifications.
+- [Is Vibe Coding the Future of Software Development?](https://www.abids.tech/blog/is-vibe-coding-the-future-of-software-development): Exploring what Vibe Coding is, its real benefits and risks, whether AI can replace traditional software engineers, and how smart developers use AI tools today.
+- [AI Indexing Explained: How Search Engines Index Your Content in 2026](https://www.abids.tech/blog/ai-indexing-explained): Deep dive into modern AI-powered indexing — vector embeddings, semantic search, transformer models, HNSW, RAG, and what it means for content creators.
+- [Technical SEO for Developers: A Complete Guide](https://www.abids.tech/blog/technical-seo-for-developers): Master Technical SEO as a developer — Core Web Vitals, structured data, canonical URLs, sitemap generation, metadata best practices, and everything Google needs to understand your site.
+
+## Connect
+
+- Website: https://www.abids.tech
+- GitHub: https://github.com/Abid-sh84
+- LinkedIn: https://www.linkedin.com/in/shkabid40/
+- X (Twitter): https://x.com/shkabid40
+- Email: muhammadabid9326@gmail.com
+
+## Optional
+
+- Full content version: https://www.abids.tech/llms-full.txt

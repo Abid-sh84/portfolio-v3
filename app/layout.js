@@ -73,6 +73,8 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <meta name="google-site-verification" content="CyYTp5fhSZXsYxieb5SH-4WDADdzZtSmdF8A8-Hj05k" />
+        {/* llms.txt — LLM-readable site summary for AI agents and crawlers */}
+        <link rel="help" type="text/plain" href="/llms.txt" />
         {/* JSON-LD Structured Data — Person schema for Google rich results */}
         <script
           type="application/ld+json"
